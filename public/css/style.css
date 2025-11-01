@@ -221,7 +221,7 @@
     animation-fill-mode: both;
 }
 
-@keyframes alert-hidden {
+/* @keyframes alert-hidden {
     from {
         right: 15px;
     }
@@ -241,4 +241,4 @@
     font-weight: 600;
     border-radius: 50%;
     cursor: pointer;
-}
+} */
