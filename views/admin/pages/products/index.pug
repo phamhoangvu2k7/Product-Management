@@ -4,6 +4,7 @@ include ../../mixins/search
 include ../../mixins/pagination
 include ../../mixins/form-change-multi
 include ../../mixins/alert
+include ../../mixins/sort
 
 block main
     +alert-success(5000)
@@ -20,6 +21,13 @@ block main
                 .col-6
                     +search(keyword)
                     
+        .card.mb-3
+            .card-header Sắp xếp
+            .card-body
+                .row
+                    .col-4
+                        +sort()
+                        
     .card.mb-3
         .card-header Danh sách
             .card-body         
@@ -31,6 +39,7 @@ block main
                             href=`${prefixAdmin}/products/create`
                             class="btn btn-outline-success"
                         ) + Thêm mới
+
 
                 table(
                     class="table table-hover table-sm"
@@ -125,3 +134,4 @@ block main
     ) 
 
     script(src="/admin/js/product.js")
+    

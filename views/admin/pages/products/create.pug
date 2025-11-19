@@ -32,6 +32,15 @@ block main
             )
 
         div(class="form-group") 
+            label(for="desc") Nội dung
+            textarea(
+                class="form-control textarea-mce"
+                id="content"
+                name="content"
+                rows="5" 
+            )
+
+        div(class="form-group") 
             label(for="price") Giá
             input(
                 type="number"
@@ -120,3 +129,5 @@ block main
                 type="submit"
                 class="btn btn-primary"
             ) Tạo mới 
+            
+    script(src="/admin/js/product.js") 
