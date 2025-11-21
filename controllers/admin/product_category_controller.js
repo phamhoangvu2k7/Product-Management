@@ -14,11 +14,6 @@ module.exports.index = async (req, res) => {
         deleted: false
     };
 
-    const records = await ProductCategory.find(find);
-
-    const newRecords = createTreeHelpers.tree(records);
-
-
     if (req.query.status)
         find.status = req.query.status;
 
@@ -36,20 +31,12 @@ module.exports.index = async (req, res) => {
         currentPage: 1
     }, req.query, countProducts);
 
-    // Sort
-    let sort = {};
+    const records = await ProductCategory.find(find)
+        .limit(objectPagination.limitItems)
+        .skip(objectPagination.skip);
+;
 
-    if (req.query.sortKey && req.query.sortValue) {
-        sort[req.query.sortKey] = req.query.sortValue;
-    }
-    else {
-        sort.position = "desc";
-    }
-
-    // const records = await ProductCategory.find(find)
-    //     .sort(sort)
-    //     .limit(objectPagination.limitItems)
-    //     .skip(objectPagination.skip);
+    const newRecords = createTreeHelpers.tree(records);
 
     res.render("admin/pages/product_category/index", {
         pageTitle: "Danh mục sản phẩm",
@@ -74,6 +61,61 @@ module.exports.create = async (req, res) => {
         pageTitle: "Tạo danh mục sản phẩm",
         records: newRecords
     });
+}
+
+// [GET] /admin/product_category/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const data = await ProductCategory.findOne({
+            _id: id,
+            deleted: false
+        });
+
+        const records = await ProductCategory.find({
+            deleted: false
+        });
+
+        const newRecords = createTreeHelpers.tree(records);
+
+        res.render("admin/pages/product_category/edit", {
+            pageTitle: "Chỉnh sửa danh mục sản phẩm",
+            data: data,
+            records: newRecords
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/product_category`);
+    }
+}
+
+module.exports.detail = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await ProductCategory.findOne({
+            _id: id,
+            deleted: false
+        });
+
+        res.render("admin/pages/product_category/detail", {
+            pageTitle: "Chi tiết danh mục sản phẩm",
+            product: product
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/product_category`);
+    }
+    
+}
+
+// [PATCH] /admin/product_category/edit/:id
+module.exports.editPatch = async (req, res) => {
+    const id = req.params.id;
+
+    req.body.position = parseInt(req.body.position);
+
+    await ProductCategory.updateOne({_id: id}, req.body);
+    
+    res.redirect(`${systemConfig.prefixAdmin}/product_category`);
 }
 
 // [POST] /admin/product_category/create

@@ -1,7 +1,4 @@
 extends ../../layouts/default
-include ../../mixins/filterStatus
-include ../../mixins/search
-include ../../mixins/pagination
 include ../../mixins/form-change-multi
 include ../../mixins/alert
 include ../../mixins/sort_category
@@ -9,23 +6,10 @@ include ../../mixins/table_tree
 
 block main
     h1 Danh mục sản phẩm
-
-    .card.mb-3
-        .card-header Bộ Lọc và Tìm Kiếm
-            .card-body
-                .row
-                    .col-6
-                        +filter-status(filterStatus)
-
-                    .col-6
-                        +search(keyword)
                         
-    .card.mb-3
-        .card-header Sắp xếp
-        .card-body
-            .row
-                .col-4
-                    +sort_category()
+    +alert-success(5000)
+
+    +alert-error(5000)
 
     .card.mb-3
         .card-header Danh sách

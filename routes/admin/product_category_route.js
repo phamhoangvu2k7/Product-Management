@@ -17,6 +17,18 @@ router.get('/', controller.index);
 
 router.get('/create', controller.create);
 
+router.get('/edit/:id', controller.edit);
+
+router.get('/detail/:id', controller.detail);
+
+router.patch(
+    '/edit/:id', 
+    upload.single("thumbnail"),
+    uploadCloud.upload,
+    validate.createPost,
+    controller.editPatch
+);
+
 router.post(
     '/create',
     upload.single("thumbnail"),
