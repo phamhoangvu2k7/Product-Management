@@ -51,17 +51,21 @@ module.exports.detail = async (req, res) => {
 
 // [GET] /admin/role/edit
 module.exports.edit = async (req, res) => {
-    const id = req.params.id;
+    try {
+        const id = req.params.id;
+        
+        const data = await Role.findOne({
+            _id: id,
+            deleted: false
+        });
     
-    const data = await Role.findOne({
-        _id: id,
-        deleted: false
-    });
-
-    res.render("admin/pages/role/edit", {
-        pageTitle: "Chỉnh sửa nhóm quyền",
-        data: data
-    });
+        res.render("admin/pages/role/edit", {
+            pageTitle: "Chỉnh sửa nhóm quyền",
+            data: data
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/role`);
+    }
 }
 
 // [PATCH] /admin/role/edit
