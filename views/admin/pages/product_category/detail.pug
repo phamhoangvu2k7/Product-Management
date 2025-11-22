@@ -3,13 +3,6 @@ extends ../../layouts/default.pug
 block main  
     if (product.title)
         h1(class="mb-4") #{product.title}
-
-    if (product.thumbnail)
-        div(class="mb-4") 
-            img(
-                src=product.thumbnail
-                style="width: 100px"
-            )
             
     if (product.status)
         div(class="mb-4")
