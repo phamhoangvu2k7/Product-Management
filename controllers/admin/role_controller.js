@@ -29,3 +29,17 @@ module.exports.createPost = async (req, res) => {
 
     res.redirect(`${systemConfig.prefixAdmin}/role`);
 }
+
+// [GET] /admin/role/detail
+module.exports.detail = async (req, res) => {
+    const id = req.params.id;
+    const records = await Role.findOne({
+        _id: id,
+        deleted: false
+    });
+
+    res.render("admin/pages/role/detail", {
+        pageTitle: "Chi tiết nhóm quyền",
+        record: records
+    })
+}
