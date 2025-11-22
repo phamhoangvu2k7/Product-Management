@@ -32,4 +32,6 @@ router.patch(
 
 router.delete('/delete/:id', controller.deletePermission);
 
+router.patch('/change-multi', controller.changeMulti);
+
 module.exports = router;

@@ -74,6 +74,8 @@ module.exports.createPost = async (req, res) => {
     const record = new ProductCategory(req.body);
     await record.save();
 
+    req.flash("success", `Tạo danh mục sản phẩm thành công`);
+
     res.redirect(`${systemConfig.prefixAdmin}/product_category`);
 }
 
@@ -191,7 +193,7 @@ module.exports.deleteItem = async (req, res) => {
         deleted: true,
         deletedAt: new Date()
     });
-    req.flash("success", `Xóa sản phẩm thành công`);
+    req.flash("success", `Xóa danh mục sản phẩm thành công`);
 
     res.redirect(req.get("referer"));
 }

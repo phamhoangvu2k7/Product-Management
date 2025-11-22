@@ -86,3 +86,41 @@ module.exports.deletePermission = async (req, res) => {
 
     res.redirect(req.get("referer"));
 }
+
+// [PATCH] /admin/role/change-multi
+module.exports.changeMulti = async (req, res) => {
+    const type = req.body.type;
+    const ids = req.body.ids.split(', ');
+
+    switch (type) {
+        case "active":
+            await Role.updateMany({ _id: { $in: ids } }, { status: "active" });
+            req.flash("success", `Cập nhật trạng thái của ${ids.length} sản phẩm thành công`);
+            break;
+
+        case "inactive":
+            await Role.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+            req.flash("success", `Cập nhật trạng thái của ${ids.length} sản phẩm thành công`);
+            break;
+
+        case "delete-all":
+            await Role.updateMany({ _id: { $in: ids } }, {
+                deleted: true,
+                deletedAt: new Date()
+            });
+            req.flash("success", `Xóa ${ids.length} sản phẩm thành công`);
+            break;
+        case "change-position":
+            for (const item of ids) {
+                let [id, position] = item.split('-');
+                position = parseInt(position);
+                await Role.updateOne({ _id: id }, { position: position });
+            }
+            req.flash("success", `Cập nhật vị trí của ${ids.length} sản phẩm thành công`);
+            break;
+        default:
+            break;
+    }
+
+    res.redirect(req.get("referer"));
+}
