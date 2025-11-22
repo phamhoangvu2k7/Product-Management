@@ -4,6 +4,9 @@ include ../../mixins/alert.pug
 block main 
     h1(class="mb-4") Nhóm quyền
 
+    +alert-success(5000)
+    +alert-error(5000)
+
     .card.mb-3 
         .card-header Danh sách 
         .card-body 
@@ -43,8 +46,18 @@ block main
                                         ) Sửa
                                         button(
                                             class="btn btn-danger btn-sm ml-1"
+                                            data-id=item.id
+                                            button-delete
                                         ) Xóa
                         else 
                             tr 
                                 td(colspan="4" class="text-center") Chưa có nhóm quyền nào được tạo.
 
+    form(
+        action="" 
+        method="POST"
+        id="form-delete-item"
+        data-path=`${prefixAdmin}/role/delete`
+    ) 
+
+    script(src="/admin/js/role.js") 

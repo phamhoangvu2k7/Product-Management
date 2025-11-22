@@ -110,6 +110,8 @@ module.exports.editPatch = async (req, res) => {
     req.body.position = parseInt(req.body.position);
 
     await ProductCategory.updateOne({_id: id}, req.body);
+
+    req.flash("success", "Cập nhật thành công");
     
     res.redirect(`${systemConfig.prefixAdmin}/product_category`);
 }

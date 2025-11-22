@@ -26,6 +26,7 @@ module.exports.create = async (req, res) => {
 module.exports.createPost = async (req, res) => {
     const record = new Role(req.body);
     await record.save();
+    req.flash("success", "Cập nhật thành công");
 
     res.redirect(`${systemConfig.prefixAdmin}/role`);
 }
@@ -48,6 +49,7 @@ module.exports.detail = async (req, res) => {
     }
 }
 
+// [GET] /admin/role/edit
 module.exports.edit = async (req, res) => {
     const id = req.params.id;
     
@@ -62,10 +64,25 @@ module.exports.edit = async (req, res) => {
     });
 }
 
+// [PATCH] /admin/role/edit
 module.exports.editPatch = async (req, res) => {    
     const id = req.params.id;
     
     await Role.updateOne({_id: id}, req.body);
 
+    req.flash("success", "Cập nhật thành công");
+
     res.redirect(`${systemConfig.prefixAdmin}/role`);
+}
+
+// [DELETE] /admin/role/delete/:id
+module.exports.deletePermission = async (req, res) => {
+    const id = req.params.id;
+
+    await Role.updateOne({_id: id}, {
+        deleted: true
+    });
+    req.flash("success", `Xóa nhóm quyền thành công`);
+
+    res.redirect(req.get("referer"));
 }

@@ -5,3 +5,7 @@ block main
         h1(class="mb-4") #{record.title}
     if (record.description)
         div(class="mb-4") !{record.description}   
+    a(
+        href=`${prefixAdmin}/role/edit/${record.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa

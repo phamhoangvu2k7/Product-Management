@@ -30,4 +30,6 @@ router.patch(
     controller.editPatch
 )
 
+router.delete('/delete/:id', controller.deletePermission);
+
 module.exports = router;
