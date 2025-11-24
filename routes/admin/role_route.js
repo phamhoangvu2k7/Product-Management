@@ -34,4 +34,8 @@ router.delete('/delete/:id', controller.deletePermission);
 
 router.patch('/change-multi', controller.changeMulti);
 
+router.get('/permission', controller.permission);
+
+router.patch('/permission', controller.permissionPatch);
+
 module.exports = router;

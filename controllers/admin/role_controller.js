@@ -128,3 +128,33 @@ module.exports.changeMulti = async (req, res) => {
 
     res.redirect(req.get("referer"));
 }
+
+// [GET] /admin/role/permission
+module.exports.permission = async (req, res) => {
+    let find = {
+        deleted: false
+    };
+
+    const records = await Role.find(find);
+    
+    res.render("admin/pages/role/permission", {
+        pageTitle: "Phân quyền",
+        record: records
+    });
+}
+
+// [PATCH] /admin/role/permission
+module.exports.permissionPatch = async (req, res) => {
+    try {
+        const permission = JSON.parse(req.body.permission);
+    
+        for (const item of permission) {
+            await Role.updateOne({_id: item.id}, {permissions: item.permission});
+        }
+    
+        req.flash("success", "Cập nhật phân quyền thành công");
+        res.redirect(`${systemConfig.prefixAdmin}/role/permission`);
+    } catch (error) {
+        req.flash("error", "Cập nhật phân quyền không thành công");
+    }
+}
