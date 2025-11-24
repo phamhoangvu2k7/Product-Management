@@ -15,7 +15,7 @@
 17  .env.development.local
 18  .env.test.local
 19  .env.production.local
-20  .env
+20  .env 
 21
 22  npm-debug.log*
 23  yarn-debug.log*
