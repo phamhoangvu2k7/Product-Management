@@ -1,0 +1,16 @@
+extends ../../layouts/default.pug 
+
+block main 
+    if (data.fullName)
+        div(class="mb-4") #{data.fullName}
+    if (data.email)
+        div(class="mb-4") #{data.email}
+    if (data.phone)
+        div(class="mb-4") #{data.phone}
+    if (role.title)
+        div(class="mb-4") #{role.title}
+
+    a(
+        href=`${prefixAdmin}/account/edit/${data.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa

@@ -56,3 +56,65 @@ module.exports.createPost = async (req, res) => {
         res.redirect(`${systemConfig.prefixAdmin}/account`);
     }
 }
+
+// [GET] /admin/account/edit
+module.exports.edit = async (req, res) => {
+    let find = {
+        _id: req.params.id,
+        deleted: false
+    }
+
+    try {
+        const data = await Account.findOne(find);
+
+        const roles = await Role.find({
+            deleted: false
+        });
+
+        res.render("admin/pages/account/edit", {
+            pageTitle: "Chỉnh sửa tài khoản",
+            data: data,
+            roles: roles
+        });
+
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/account`);
+    }
+}
+
+// [GET] /admin/account/detail
+module.exports.detail = async(req, res) => {
+    try {
+        const id = req.params.id;
+        
+        const datas = await Account.findOne({
+            _id: id,
+            deleted: false
+        });
+
+        const roles = await Role.findOne({
+            _id: datas.role_id,
+            deleted: false
+        })
+        
+        res.render("admin/pages/account/detail", {
+            pageTitle: "Chi tiết tài khoản",
+            data: datas,
+            role: roles
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/account`);
+    }
+}
+
+// [DELETE] /admin/account/delete
+module.exports.deleteAccount = async (req, res) => {
+    const id = req.params.id;
+
+    await Account.updateOne({_id: id}, {
+        deleted: true
+    });
+
+    req.flash("success", "Xóa tài khoản thành công");
+    res.redirect(req.get("referer"));
+}
