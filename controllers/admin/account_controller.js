@@ -118,3 +118,15 @@ module.exports.deleteAccount = async (req, res) => {
     req.flash("success", "Xóa tài khoản thành công");
     res.redirect(req.get("referer"));
 }
+
+// [PATCH] /change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    const status = req.params.status;
+    const id = req.params.id;
+
+    await Account.updateOne({ _id: id }, { status: status });
+
+    req.flash("success","Cập nhật trạng thái thành công");
+
+    res.redirect(req.get("referer"));
+}
