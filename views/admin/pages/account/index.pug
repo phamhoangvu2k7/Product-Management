@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 block main 
     +alert-success(5000)
+    +alert-error(5000)
 
     h1(class="mb-4") Danh sách tài khoản 
 
@@ -36,7 +37,6 @@ block main
                                 td 
                                     img(
                                         src=item.avatar 
-                                        alt=item.fullName 
                                         width="100px"
                                         height="auto"
                                     )

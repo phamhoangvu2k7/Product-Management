@@ -26,6 +26,14 @@ router.post(
     controller.createPost
 );
 
+router.patch(
+    '/edit/:id',
+    upload.single("avatar"),
+    uploadCloud.upload,
+    validate.editPatch,
+    controller.editPatch
+)
+
 router.get('/edit/:id', controller.edit);
 
 router.delete('/delete/:id', controller.deleteAccount);
