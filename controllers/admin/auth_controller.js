@@ -1,0 +1,39 @@
+const Account = require("../../models/account_model");
+const systemConfig = require("../../config/system");
+const md5 = require("md5");
+
+// [GET] /admin/login
+module.exports.login = (req, res) => {
+    res.render("admin/pages/auth/login", {
+        pageTitle: "Trang đăng nhập"
+    });
+}
+
+// [POST] /admin/login
+module.exports.loginPost = async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const user = await Account.findOne({
+        email: email,
+        deleted: false
+    });
+
+    if (!user) {
+        req.flash("error", "Email không tồn tại!");
+        res.redirect(req.get("referer"));
+    } 
+
+    if (md5(password) != user.password) {
+        req.flash("error", "Mật khẩu không chính xác!");
+        res.redirect(req.get("referer"));
+    }
+
+    if (user.status == "inactive") {
+        req.flash("error", "Tài khoản đã bị khóa!");
+        res.redirect(req.get("referer"));
+    }
+
+    res.cookie("token", user.token);
+    res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+}
