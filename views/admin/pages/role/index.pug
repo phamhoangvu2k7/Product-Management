@@ -3,72 +3,79 @@ include ../../mixins/alert.pug
 include ../../mixins/form-change-multi
 
 block main 
-    h1(class="mb-4") Nhóm quyền
+    if (role.permissions.includes("role_view"))
 
-    +alert-success(5000)
-    +alert-error(5000)
+        h1(class="mb-4") Nhóm quyền
 
-    .card.mb-3 
-        .card-header Danh sách 
-        .card-body 
-            .row 
-                .col-8 
-                        +form-change-multi(`${prefixAdmin}/role/change-multi?_method=PATCH`)
-                .col-4.text-right
-                    a(
-                        href=`${prefixAdmin}/role/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm mới
+        +alert-success(5000)
+        +alert-error(5000)
 
-                table(
-                    class="table table-hover table-sm"
-                    checkbox-multi
-                )
-                    thead 
-                        tr  
-                            th 
-                                input(type="checkbox" name="checkall")
-                            th STT
-                            th Nhóm quyền
-                            th Mô tả ngắn
-                            th Hành động
+        .card.mb-3 
+            .card-header Danh sách 
+            .card-body 
+                .row 
+                    .col-8 
+                            +form-change-multi(`${prefixAdmin}/role/change-multi?_method=PATCH`)
+                    .col-4.text-right
+                        if (role.permissions.includes("role_create"))
+                            a(
+                                href=`${prefixAdmin}/role/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới
 
-                    tbody 
-                        if(record.length > 0)
-                            each item, index in record
+                    table(
+                        class="table table-hover table-sm"
+                        checkbox-multi
+                    )
+                        thead 
+                            tr  
+                                th 
+                                    input(type="checkbox" name="checkall")
+                                th STT
+                                th Nhóm quyền
+                                th Mô tả ngắn
+                                th Hành động
+
+                        tbody 
+                            if(record.length > 0)
+                                each item, index in record
+                                    tr 
+                                        td 
+                                            input(
+                                                type="checkbox"
+                                                name="id"
+                                                value=item.id
+                                            )
+                                        td #{index + 1}
+                                        td #{item.title} 
+                                        td !{item.description}
+                                        td
+                                            a(
+                                                class="btn btn-secondary btn-sm"
+                                                href=`${prefixAdmin}/role/detail/${item.id}`
+                                            ) Chi tiết
+
+                                            if (role.permissions.includes("role_edit"))
+                                                a(
+                                                    class="btn btn-warning btn-sm ml-1"
+                                                    href=`${prefixAdmin}/role/edit/${item.id}`
+                                                ) Sửa
+
+                                            if (role.permissions.includes("role_delete"))
+                                                button(
+                                                    class="btn btn-danger btn-sm ml-1"
+                                                    data-id=item.id
+                                                    button-delete
+                                                ) Xóa
+                            else 
                                 tr 
-                                    td 
-                                        input(
-                                            type="checkbox"
-                                            name="id"
-                                            value=item.id
-                                        )
-                                    td #{index + 1}
-                                    td #{item.title} 
-                                    td !{item.description}
-                                    td
-                                        a(
-                                            class="btn btn-secondary btn-sm"
-                                            href=`${prefixAdmin}/role/detail/${item.id}`
-                                        ) Chi tiết
-                                        a(
-                                            class="btn btn-warning btn-sm ml-1"
-                                            href=`${prefixAdmin}/role/edit/${item.id}`
-                                        ) Sửa
-                                        button(
-                                            class="btn btn-danger btn-sm ml-1"
-                                            data-id=item.id
-                                            button-delete
-                                        ) Xóa
-                        else 
-                            tr 
-                                td(colspan="4" class="text-center") Chưa có nhóm quyền nào được tạo.
-    
-    form(
-        action="" 
-        method="POST"
-        id="form-delete-item"
-        data-path=`${prefixAdmin}/role/delete`
-    ) 
+                                    td(colspan="4" class="text-center") Chưa có nhóm quyền nào được tạo.
+        
+        form(
+            action="" 
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/role/delete`
+        ) 
 
-    script(src="/admin/js/role.js") 
+        script(src="/admin/js/role.js") 

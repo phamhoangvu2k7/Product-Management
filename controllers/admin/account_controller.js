@@ -27,13 +27,13 @@ module.exports.index = async (req, res) => {
 
 // [GET] /admin/account/create
 module.exports.create = async (req, res) => {
-    const role = await Role.find({
+    const roles = await Role.find({
         deleted: false
     });
 
     res.render("admin/pages/account/create", {
         pageTitle: "Thêm mới tài khoản",
-        role: role
+        roles: roles
     });
 }
 

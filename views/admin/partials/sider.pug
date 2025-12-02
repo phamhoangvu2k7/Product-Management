@@ -3,15 +3,27 @@
         ul
             li
                 a(href=prefixAdmin + "/dashboard") Tổng quan
-            li
-                a(href=prefixAdmin + "/product_category") Danh mục sản phẩm
-            li
-                a(href=prefixAdmin + "/products") Danh sách sản phẩm
-            li 
-                a(href=prefixAdmin + "/trash_can") Khôi phục sản phẩm
-            li 
-                a(href=prefixAdmin + "/role") Nhóm quyền
-            li
-                a(href=prefixAdmin + "/role/permission") Phân quyền
-            li
-                a(href=prefixAdmin + "/account") Danh sách tài khoản
+            
+            if (role.permissions.includes("products-category_view"))
+                li
+                    a(href=prefixAdmin + "/product_category") Danh mục sản phẩm
+            
+            if (role.permissions.includes("products_view"))
+                li
+                    a(href=prefixAdmin + "/products") Danh sách sản phẩm
+            
+            if (role.permissions.includes("products_restore"))
+                li 
+                    a(href=prefixAdmin + "/trash_can") Khôi phục sản phẩm
+            
+            if (role.permissions.includes("role_view"))
+                li 
+                    a(href=prefixAdmin + "/role") Nhóm quyền
+                
+            if (role.permissions.includes("role_permission"))
+                li
+                    a(href=prefixAdmin + "/role/permission") Phân quyền
+            
+            if (role.permissions.includes("account_view"))
+                li
+                    a(href=prefixAdmin + "/account") Danh sách tài khoản

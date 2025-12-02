@@ -2,47 +2,49 @@ extends ../../layouts/default
 include ../../mixins/alert
 
 block main
-    +alert-success(5000)
+    if (role.permissions.includes("products_restore"))
 
-    h1 Các sản phẩm bị xóa
+        +alert-success(5000)
 
-    .card.mb-3
-    .card-header Danh sách
-        .card-body         
-            table(class="table table-hover table-sm")
-                thead
-                    tr
-                        th STT
-                        th Hình ảnh
-                        th Tiêu đề
-                        th Giá
-                        th Hành động
-                        
-                tbody
-                    each item, index in products
+        h1 Các sản phẩm bị xóa
+
+        .card.mb-3
+        .card-header Danh sách
+            .card-body         
+                table(class="table table-hover table-sm")
+                    thead
                         tr
-                            td #{index + 1}
-                            td
-                                img(
-                                    src=item.thumbnail
-                                    alt=item.title
-                                    width="100px"
-                                    height="100px"
-                                )
-                            td #{item.title}
-                            td #{item.price}$
-                            td
-                                button(
-                                    class="btn btn-primary btn-sm"
-                                    data-id=item.id
-                                    button-restore
-                                ) Khôi phục
- 
-    form(
-        action=""
-        method="POST"
-        id="form-restore-item"
-        data-path=`${prefixAdmin}/trash_can/restore`
-    )
+                            th STT
+                            th Hình ảnh
+                            th Tiêu đề
+                            th Giá
+                            th Hành động
+                            
+                    tbody
+                        each item, index in products
+                            tr
+                                td #{index + 1}
+                                td
+                                    img(
+                                        src=item.thumbnail
+                                        alt=item.title
+                                        width="100px"
+                                        height="100px"
+                                    )
+                                td #{item.title}
+                                td #{item.price}$
+                                td
+                                    button(
+                                        class="btn btn-primary btn-sm"
+                                        data-id=item.id
+                                        button-restore
+                                    ) Khôi phục
+    
+        form(
+            action=""
+            method="POST"
+            id="form-restore-item"
+            data-path=`${prefixAdmin}/trash_can/restore`
+        )
 
-    script(src="/admin/js/trash_can.js")
+        script(src="/admin/js/trash_can.js")
