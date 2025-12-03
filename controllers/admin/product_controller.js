@@ -89,7 +89,10 @@ module.exports.changeMulti = async (req, res) => {
         case "delete-all":
             await Product.updateMany({_id: {$in : ids}}, {
                 deleted: true,
-                deletedAt: new Date()
+                deletedBy: {
+                    name: res.locals.user.fullName,
+                    deleteAt: new Date()
+                }
             });
             req.flash("success",`Xóa ${ids.length} sản phẩm thành công`);
             break;
@@ -112,10 +115,17 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
     const id = req.params.id;
 
-    await Product.updateOne({_id: id}, {
-        deleted: true,
-        deletedAt: new Date()
-    });
+    await Product.updateOne(
+        {_id: id}, 
+        {
+            deleted: true,
+            deletedBy: {
+                name: res.locals.user.fullName,
+                deleteAt: new Date()
+            }
+        }
+    );
+
     req.flash("success",`Xóa sản phẩm thành công`);
 
     res.redirect(req.get("referer"));

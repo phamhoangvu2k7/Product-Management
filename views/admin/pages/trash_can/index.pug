@@ -18,7 +18,7 @@ block main
                             th STT
                             th Hình ảnh
                             th Tiêu đề
-                            th Thời điểm xóa
+                            th Người xóa
                             th Giá
                             th Hành động
                             
@@ -35,7 +35,7 @@ block main
                                     )
                                 td #{item.title}
                                 td
-                                    +formatDateTime(item.createdBy.deleteAt)
+                                    p #{item.deletedBy.name}
                                 td #{item.price}$
                                 td
                                     button(

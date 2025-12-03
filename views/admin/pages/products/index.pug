@@ -91,7 +91,7 @@ block main
                                         )
                                     td 
                                         p #{item.createdBy.name}
-                                        +formatDateTime(item.createdBy.createAt)
+                                        +formatDate(item.createdBy.createAt)
                                     td
                                         if (role.permissions.includes("products_edit"))
             
