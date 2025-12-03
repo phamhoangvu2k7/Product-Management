@@ -5,6 +5,6 @@ module.exports.connect = async () => {
         await mogoose.connect(process.env.MONGO_URL);
         console.log("Connect success");
     } catch (error) {
-        console.log("Connect error");
+        console.log("Connect error"); 
     }
 }
