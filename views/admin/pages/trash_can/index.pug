@@ -1,5 +1,6 @@
 extends ../../layouts/default
 include ../../mixins/alert
+include ../../mixins/moment
 
 block main
     if (role.permissions.includes("products_restore"))
@@ -17,6 +18,7 @@ block main
                             th STT
                             th Hình ảnh
                             th Tiêu đề
+                            th Thời điểm xóa
                             th Giá
                             th Hành động
                             
@@ -32,6 +34,8 @@ block main
                                         height="100px"
                                     )
                                 td #{item.title}
+                                td
+                                    +formatDateTime(item.createdBy.deleteAt)
                                 td #{item.price}$
                                 td
                                     button(

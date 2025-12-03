@@ -5,6 +5,7 @@ include ../../mixins/pagination
 include ../../mixins/form-change-multi
 include ../../mixins/alert
 include ../../mixins/sort
+include ../../mixins/moment
 
 block main
     if (role.permissions.includes("products_view"))
@@ -57,6 +58,7 @@ block main
                                 th Tiêu đề
                                 th Giá
                                 th Vị trí
+                                th Người tạo
                                 th Trạng thái
                                 th Hành động
                                 
@@ -87,6 +89,9 @@ block main
                                             min="1"
                                             name="position"
                                         )
+                                    td 
+                                        p #{item.createdBy.name}
+                                        +formatDateTime(item.createdBy.createAt)
                                     td
                                         if (role.permissions.includes("products_edit"))
             

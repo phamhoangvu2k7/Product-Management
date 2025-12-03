@@ -149,6 +149,11 @@ module.exports.createPost = async (req, res) => {
     }
     else req.body.position = parseInt(req.body.position);
     
+    req.body.createdBy = {
+        account_id: res.locals.user.id,
+        name: res.locals.user.fullName
+    };
+
     const product = new Product(req.body);
     await product.save();
 
