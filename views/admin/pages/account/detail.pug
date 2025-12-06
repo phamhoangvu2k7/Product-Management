@@ -3,6 +3,12 @@ extends ../../layouts/default.pug
 block main 
     if (data.fullName)
         div(class="mb-4") #{data.fullName}
+    if (data.avatar)
+        div(class="mb-4") 
+            img(
+                src=data.avatar
+                style="width: 100px"
+            )
     if (data.email)
         div(class="mb-4") #{data.email}
     if (data.phone)
