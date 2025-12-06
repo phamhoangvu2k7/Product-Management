@@ -37,10 +37,18 @@ const productSchema = new mongoose.Schema({
         name: String,
         deleteAt: Date
     },
+    updatedBy: [
+        {
+            account_id: String,
+            updatedAt: Date
+        }
+    ],
     restoredAt: Date
-}, {
-    timestamps: true
-});
+    }, 
+    {
+        timestamps: true
+    }
+);
 
 const Product = mongoose.model('Product', productSchema, "products");
 
