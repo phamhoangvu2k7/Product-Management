@@ -34,7 +34,6 @@ module.exports.index = async (req, res) => {
     const records = await ProductCategory.find(find)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip);
-;
 
     const newRecords = createTreeHelpers.tree(records);
 
