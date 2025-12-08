@@ -171,6 +171,13 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
+    const permissions = res.locals.role.permissions;
+
+    if (!permissions.includes("products_create")) {
+        res.send("Không có quyền truy cập");
+        return;
+    }
+
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -220,6 +227,13 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req, res) => {
+    const permissions = res.locals.role.permissions;
+
+    if (!permissions.includes("account_edit")) {
+        res.send("Không có quyền truy cập");
+        return;
+    }
+
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);

@@ -39,6 +39,13 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/account/create
 module.exports.createPost = async (req, res) => {
+    const permissions = res.locals.role.permissions;
+
+    if (!permissions.includes("account_create")) {
+        res.send("Không có quyền truy cập");
+        return;
+    }
+
     const emailExist = await Account.findOne({
         email: req.body.email,
         deleted: false
@@ -84,6 +91,13 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/account/edit
 module.exports.editPatch = async (req, res) => {
+    const permissions = res.locals.role.permissions;
+
+    if (!permissions.includes("account_edit")) {
+        res.send("Không có quyền truy cập");
+        return;
+    }
+
     const id = req.params.id;
 
     const emailExist = await Account.findOne({

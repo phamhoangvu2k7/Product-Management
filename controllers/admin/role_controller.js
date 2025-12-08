@@ -24,6 +24,13 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/role/create
 module.exports.createPost = async (req, res) => {
+    const permissions = res.locals.role.permissions;
+
+    if (!permissions.includes("role_create")) {
+        res.send("Không có quyền truy cập");
+        return;
+    }
+
     const record = new Role(req.body);
     await record.save();
     req.flash("success", "Cập nhật thành công");
@@ -70,6 +77,13 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/role/edit
 module.exports.editPatch = async (req, res) => {    
+    const permissions = res.locals.role.permissions;
+
+    if (!permissions.includes("role_edit")) {
+        res.send("Không có quyền truy cập");
+        return;
+    }
+
     const id = req.params.id;
     
     await Role.updateOne({_id: id}, req.body);
