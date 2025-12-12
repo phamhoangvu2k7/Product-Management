@@ -20,21 +20,33 @@ module.exports.index = async (req, res) => {
     });
 };
 
-// [GET] /products/:slug
+// [GET] /products/:slugProduct
 module.exports.detail = async (req, res) => {
     try {
         const find = {
+            slug: req.params.slugProduct,
             deleted: false,
-            slug: req.params.slug,
-            staus: "active"
+            status: "active"
         };
+        
         const product = await Product.findOne(find);
+
+        if (product.product_category_id) {
+            const category = await ProductCategory.findOne({
+                _id: product.product_category_id,
+                status: "active",
+                deleted: false
+            });
+
+            product.category = category;
+        }
 
         res.render("client/pages/products/detail", {
             pageTitle: product.title,
             product: product
         });
     } catch (error) {
+        console.log(error);
         res.redirect(`/products`)
     }
 
