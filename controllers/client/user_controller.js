@@ -2,6 +2,7 @@ const generateHelper = require("../../helpers/generate");
 const User = require("../../models/user_model");
 const ForgotPassword = require("../../models/forgot_password_model");
 const md5 = require("md5");
+const sendMailHelper = require("../../helpers/sendMail");
 
 module.exports.register = async (req, res) => {
     res.render("client/pages/user/register", {
@@ -101,8 +102,13 @@ module.exports.forgotPasswordPost = async (req, res) => {
     const forgotPassword = new ForgotPassword(objectForgotPassword);
     await forgotPassword.save();
 
-    // Send OTP for email    
-    console.log(`Send otp to email ${otp}`);
+    // Send OTP to email    
+    const subject = "Mã OTP xác minh";
+    const html = `
+        Mã OTP để lấy lại mật khẩu là <b>${otp}</b>. Thời hạn sử dụng là 3 phút
+    `;
+
+    sendMailHelper.sendMail(email, subject, html);
 
     res.redirect(`/user/password/otp?email=${email}`);
 }
@@ -149,7 +155,7 @@ module.exports.resetPasswordPost = async (req, res) => {
     const password = req.body.password;
     const confirm = req.body.confirmPassword;
 
+    
 
-
-    res.send("OK");    
+    res.send("OK");
 }
