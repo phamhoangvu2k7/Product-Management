@@ -10,7 +10,7 @@ module.exports.sendMail = (email, subject, html) => {
     });
 
     const mailOptions = {
-        from: 'your-email@gmail.com',
+        from: process.env.EMAIL_USER,
         to: email,
         subject: subject,
         html: html
@@ -19,8 +19,6 @@ module.exports.sendMail = (email, subject, html) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
         }
     });
 }

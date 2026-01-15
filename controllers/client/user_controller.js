@@ -109,7 +109,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
     `;
 
     sendMailHelper.sendMail(email, subject, html);
-
+    console.log(`OTP: ${otp}`);
     res.redirect(`/user/password/otp?email=${email}`);
 }
 
@@ -154,8 +154,14 @@ module.exports.resetPassword = (req, res) => {
 module.exports.resetPasswordPost = async (req, res) => {
     const password = req.body.password;
     const confirm = req.body.confirmPassword;
+    const user = await User.findOne({
+        tokenUser: req.cookies.tokenUser
+    }); 
 
-    
+    if (password == confirm) {
+        user.password = md5(password);
+        await user.save();
+    }
 
-    res.send("OK");
+    res.redirect("/");
 }
