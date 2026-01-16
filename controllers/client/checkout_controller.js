@@ -7,7 +7,7 @@ module.exports.index = async (req, res) => {
     const cartId = req.cookies.cartId;
     
     const cart = await Cart.findOne({
-        _id: cartId
+        user_id: cartId
     });
 
     if (cart.products.length > 0) {
@@ -36,7 +36,7 @@ module.exports.order = async (req, res) => {
     const cartId = req.cookies.cartId;
     const userInfo = req.body;
     const cart = await Cart.findOne({
-        _id: cartId
+        user_id: cartId
     });
     const products = [];
 
@@ -67,7 +67,7 @@ module.exports.order = async (req, res) => {
     order.save();
 
     await Cart.updateOne({
-        _id: cartId
+        user_id: cartId
     }, {
         products: []
     });
