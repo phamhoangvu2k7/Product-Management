@@ -8,26 +8,30 @@ module.exports.index = async (req, res) => {
     const cart = await Cart.findOne({
         user_id: cartId
     });
-
-    if (cart.products.length > 0) {
-        for (const item of cart.products) {
-            const productId = item.product_id;
-            const productInfo = await Product.findOne({
-                _id: productId,
-                deleted: false
-            }).select("title thumbnail slug price discountPercentage");
-
-            item.productInfo = productInfo;
-            item.totalPrice = (item.productInfo.price - parseInt(item.productInfo.price * item.productInfo.discountPercentage / 100)) * item.quantity;
+    // if (cart) {
+        if (cart.products.length > 0) {
+            for (const item of cart.products) {
+                const productId = item.product_id;
+                const productInfo = await Product.findOne({
+                    _id: productId,
+                    deleted: false
+                }).select("title thumbnail slug price discountPercentage");
+    
+                item.productInfo = productInfo;
+                item.totalPrice = (item.productInfo.price - parseInt(item.productInfo.price * item.productInfo.discountPercentage / 100)) * item.quantity;
+            }
         }
-    }
+    
+        cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0);
 
-    cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0);
-
-    res.render("client/pages/cart/index", {
-        pageTitle: "Giỏ hàng",
-        cartDetail: cart
-    });
+        res.render("client/pages/cart/index", {
+            pageTitle: "Giỏ hàng",
+            cartDetail: cart
+        });
+    // }
+    // else {
+    //     res.redirect("/");
+    // }
 }
 
 // [POST] /cart/add/:productId
