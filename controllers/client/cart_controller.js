@@ -8,7 +8,7 @@ module.exports.index = async (req, res) => {
     const cart = await Cart.findOne({
         user_id: cartId
     });
-    // if (cart) {
+    if (cart) {
         if (cart.products.length > 0) {
             for (const item of cart.products) {
                 const productId = item.product_id;
@@ -28,10 +28,10 @@ module.exports.index = async (req, res) => {
             pageTitle: "Giỏ hàng",
             cartDetail: cart
         });
-    // }
-    // else {
-    //     res.redirect("/");
-    // }
+    }
+    else {
+        res.redirect("/");
+    }
 }
 
 // [POST] /cart/add/:productId
