@@ -257,3 +257,120 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+/* Khung chat tổng */
+.chat {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  height: 600px; /* Chiều cao cố định hoặc dùng 80vh */
+  display: flex;
+  flex-direction: column; /* Quan trọng: Xếp dọc để đẩy footer xuống dưới */
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần thân chứa tin nhắn */
+.inner-body {
+  flex-grow: 1; /* Chiếm hết khoảng trống còn lại */
+  overflow-y: auto; /* Cho phép cuộn dọc */
+  padding: 20px;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tin nhắn chung */
+.inner-incoming,
+.inner-outgoing {
+  margin-bottom: 15px;
+  max-width: 70%; /* Tin nhắn không quá dài */
+}
+
+/* Tên người gửi */
+.inner-name {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Nội dung tin nhắn (Bong bóng chat) */
+.inner-content {
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word; /* Xuống dòng nếu chữ quá dài */
+  display: inline-block;
+}
+
+/* --- Tin nhắn ĐẾN (Người khác) --- */
+.inner-incoming {
+  align-self: flex-start; /* Căn trái */
+}
+
+.inner-incoming .inner-content {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #eee;
+}
+
+/* --- Tin nhắn ĐI (Mình gửi) --- */
+.inner-outgoing {
+  align-self: flex-end; /* Căn phải */
+  text-align: right;
+}
+
+.inner-outgoing .inner-content {
+  background-color: #0084ff; /* Màu xanh Messenger */
+  color: #fff;
+  text-align: left; /* Chữ trong bóng vẫn căn trái cho dễ đọc */
+}
+
+/* --- Phần chân (Input form) --- */
+.inner-foot {
+  padding: 15px;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+.inner-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.inner-form input {
+  flex-grow: 1; /* Input dài ra hết mức */
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  outline: none;
+  background: #f0f2f5;
+  transition: 0.3s;
+}
+
+.inner-form input:focus {
+  background: #fff;
+  border-color: #0084ff;
+}
+
+.inner-form button {
+  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #0084ff;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.inner-form button:hover {
+  background: #006bcf;
+}
