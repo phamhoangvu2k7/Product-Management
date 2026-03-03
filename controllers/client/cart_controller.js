@@ -43,38 +43,40 @@ module.exports.addPost = async (req, res) => {
     const cart = await Cart.findOne({
         user_id: cartId
     });
-    // console.log(cart);
 
-    const existProductInCart = cart.products.find(
-        item => item.product_id == productId
-    );
-    // console.log(existProductInCart);
-    if (existProductInCart) {
-        const quantityNew = quantity + existProductInCart.quantity;
-        
-        await Cart.updateOne({
-            user_id: cartId,
-            "products.product_id": productId
-        }, {
-            $set: {
-                "products.$.quantity": quantityNew
-            }
-        });
-    }
-    else {
-        const objectCart = {
-            product_id: productId,
-            quantity: quantity
-        };
+    if (cart.products) {
 
-        await Cart.updateOne(
-            {
-                user_id: cartId
-            },
-            {
-                $push: { products: objectCart }
-            }
+        const existProductInCart = cart.products.find(
+            item => item.product_id == productId
         );
+    
+        if (existProductInCart) {
+            const quantityNew = quantity + existProductInCart.quantity;
+            
+            await Cart.updateOne({
+                user_id: cartId,
+                "products.product_id": productId
+            }, {
+                $set: {
+                    "products.$.quantity": quantityNew
+                }
+            });
+        }
+        else {
+            const objectCart = {
+                product_id: productId,
+                quantity: quantity
+            };
+    
+            await Cart.updateOne(
+                {
+                    user_id: cartId
+                },
+                {
+                    $push: { products: objectCart }
+                }
+            );
+        }
     }
 
 
