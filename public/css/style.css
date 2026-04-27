@@ -5,7 +5,7 @@
 }
 
 .header .inner-logo img {
-    max-height: 60px;
+    max-height: 50px;
     max-width: 100%;
 }
 
@@ -22,10 +22,7 @@
 .header .inner-menu > ul > li {
     margin-left: 20px;
 }
-
-.header .inner-menu > ul > li > a {
-    text-decoration: none;
-}
+/* End Header */
 
 /* Footer */
 .footer {
@@ -34,6 +31,7 @@
     text-align: center;
     padding: 10px;
 }
+/* End Footer */
 
 /* box-head */
 .box-head {
@@ -46,12 +44,14 @@
     font-weight: 600;
     color: green;
 }
+/* End box-head */
 
 /* product-item */
 .product-item {
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
+    height: 100%;
 }
 
 .product-item .inner-image {
@@ -67,12 +67,12 @@
     object-fit: contain;
 }
 
-.product-item .inner-image .inner-featured {
+.product-item .inner-featured {
     position: absolute;
     top: 0;
     right: 0;
-    background: green;
-    color: #fff;
+    background-color: green;
+    color: white;
     padding: 3px 6px;
     font-weight: 600;
     font-size: 14px;
@@ -110,13 +110,13 @@
     padding: 3px 10px;
     border-radius: 8px;
 }
+/* End product-item */
 
 /* sub-menu */
 .sub-menu {
     position: relative;
     z-index: 999;
 }
-
 .sub-menu ul {
     position: absolute;
     right: 0;
@@ -128,30 +128,45 @@
     min-width: 180px;
     display: none;
 }
-
 .sub-menu ul li {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
 
+.sub-menu {
+    position: relative;
+    z-index: 999;
+}
+.sub-menu ul {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #eae9e9;
+    min-width: 180px;
+    display: none;
+}
+.sub-menu ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
 .sub-menu:hover > ul {
     display: block;
 }
-
 .sub-menu ul li {
     position: relative;
 }
-
 .sub-menu ul li ul {
     right: 100%;
     top: 0;
 }
-
 .sub-menu ul li:hover > ul {
     display: block;
 }
+/* End sub-menu */
 
-/* product-detail */
 .product-detail .inner-thumb img {
     width: 100%;
     height: auto;
@@ -209,7 +224,7 @@
 
 /* Show Alert */
 [show-alert] {
-    position: fixed;
+    position: fixed !important;
     top: 70px;
     right: 15px;
     z-index: 9999;
@@ -221,7 +236,7 @@
     animation-fill-mode: both;
 }
 
-/* @keyframes alert-hidden {
+@keyframes alert-hidden {
     from {
         right: 15px;
     }
@@ -241,4 +256,121 @@
     font-weight: 600;
     border-radius: 50%;
     cursor: pointer;
-} */
+}
+
+/* Khung chat tổng */
+.chat {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  height: 600px; /* Chiều cao cố định hoặc dùng 80vh */
+  display: flex;
+  flex-direction: column; /* Quan trọng: Xếp dọc để đẩy footer xuống dưới */
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần thân chứa tin nhắn */
+.inner-body {
+  flex-grow: 1; /* Chiếm hết khoảng trống còn lại */
+  overflow-y: auto; /* Cho phép cuộn dọc */
+  padding: 20px;
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tin nhắn chung */
+.inner-incoming,
+.inner-outgoing {
+  margin-bottom: 15px;
+  max-width: 70%; /* Tin nhắn không quá dài */
+}
+
+/* Tên người gửi */
+.inner-name {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Nội dung tin nhắn (Bong bóng chat) */
+.inner-content {
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word; /* Xuống dòng nếu chữ quá dài */
+  display: inline-block;
+}
+
+/* --- Tin nhắn ĐẾN (Người khác) --- */
+.inner-incoming {
+  align-self: flex-start; /* Căn trái */
+}
+
+.inner-incoming .inner-content {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #eee;
+}
+
+/* --- Tin nhắn ĐI (Mình gửi) --- */
+.inner-outgoing {
+  align-self: flex-end; /* Căn phải */
+  text-align: right;
+}
+
+.inner-outgoing .inner-content {
+  background-color: #0084ff; /* Màu xanh Messenger */
+  color: #fff;
+  text-align: left; /* Chữ trong bóng vẫn căn trái cho dễ đọc */
+}
+
+/* --- Phần chân (Input form) --- */
+.inner-foot {
+  padding: 15px;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+.inner-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.inner-form input {
+  flex-grow: 1; /* Input dài ra hết mức */
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  outline: none;
+  background: #f0f2f5;
+  transition: 0.3s;
+}
+
+.inner-form input:focus {
+  background: #fff;
+  border-color: #0084ff;
+}
+
+.inner-form button {
+  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #0084ff;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.inner-form button:hover {
+  background: #006bcf;
+}
