@@ -3,7 +3,7 @@ include ../../mixins/alert.pug
 include ../../mixins/form-change-multi
 
 block main 
-    if (role.permissions.includes("role_view"))
+    if (role.permissions.includes("roles_view"))
 
         h1(class="mb-4") Nhóm quyền
 
@@ -17,7 +17,7 @@ block main
                     .col-8 
                             +form-change-multi(`${prefixAdmin}/role/change-multi?_method=PATCH`)
                     .col-4.text-right
-                        if (role.permissions.includes("role_create"))
+                        if (role.permissions.includes("roles_create"))
                             a(
                                 href=`${prefixAdmin}/role/create`
                                 class="btn btn-outline-success"
@@ -55,13 +55,13 @@ block main
                                                 href=`${prefixAdmin}/role/detail/${item.id}`
                                             ) Chi tiết
 
-                                            if (role.permissions.includes("role_edit"))
+                                            if (role.permissions.includes("roles_edit"))
                                                 a(
                                                     class="btn btn-warning btn-sm ml-1"
                                                     href=`${prefixAdmin}/role/edit/${item.id}`
                                                 ) Sửa
 
-                                            if (role.permissions.includes("role_delete"))
+                                            if (role.permissions.includes("roles_delete"))
                                                 button(
                                                     class="btn btn-danger btn-sm ml-1"
                                                     data-id=item.id

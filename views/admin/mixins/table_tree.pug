@@ -11,7 +11,7 @@ mixin table_tree(items, level = 1)
             td #{item.index}
             td
                 img(
-                    src=item.thumbnail
+                    src=item.thumbnail || '/uploads/seed/no-image.svg'
                     alt=item.title
                     width="100px"
                     height="100px"

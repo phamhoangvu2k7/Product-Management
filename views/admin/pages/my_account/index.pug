@@ -6,7 +6,7 @@ block main
     if (user.avatar)
         img(src=user.avatar width="150px" class="mb-3")
     else
-        img(src="/admin/images/avatar.png" width="150px" class="mb-3")
+        img(src="/uploads/seed/no-image.svg" width="150px" class="mb-3")
 
     if (user.fullName)
         p Họ tên: <b>#{user.fullName}</b>

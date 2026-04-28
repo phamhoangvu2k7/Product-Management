@@ -3,14 +3,22 @@ const systemConfig = require("../../config/system");
 const md5 = require("md5");
 
 // [GET] /admin/auth/login
-module.exports.login = (req, res) => {
+module.exports.login = async (req, res) => {
     if (req.cookies.token) {
-        res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
-    } else {
-        res.render("admin/pages/auth/login", {
-            pageTitle: "Trang đăng nhập"
+        const user = await Account.findOne({
+            token: req.cookies.token,
+            deleted: false
         });
+
+        if (user) {
+            res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+            return;
+        }
     }
+    
+    res.render("admin/pages/auth/login", {
+        pageTitle: "Trang đăng nhập"
+    });
 }
 
 // [POST] /admin/auth/login

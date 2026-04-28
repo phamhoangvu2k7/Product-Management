@@ -41,7 +41,7 @@ module.exports.create = async (req, res) => {
 module.exports.createPost = async (req, res) => {
     const permissions = res.locals.role.permissions;
 
-    if (!permissions.includes("account_create")) {
+    if (!permissions.includes("accounts_create")) {
         res.send("Không có quyền truy cập");
         return;
     }
@@ -93,7 +93,7 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
     const permissions = res.locals.role.permissions;
 
-    if (!permissions.includes("account_edit")) {
+    if (!permissions.includes("accounts_edit")) {
         res.send("Không có quyền truy cập");
         return;
     }

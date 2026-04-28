@@ -1,25 +1,21 @@
 header.header
-    .container-fluid
-        .row.align-items-center
-            .col-3
-                .inner-logo
-                    a(href="/admin/dashboard")
-                        i.fa-solid.fa-shield-halved.mr-2
-                        | ADMIN
-            .col-9
-                div(class="text-right")
-                    a(
-                        href=`${prefixAdmin}/my_account`
-                        class="btn btn-primary btn-sm mr-2"
-                        style="border-radius: 20px; padding: 5px 15px;"
-                    ) 
-                        i.fa-solid.fa-user.mr-2
-                        | #{user.fullName}
+    .inner-logo
+        a(href="/admin/dashboard")
+            i.fa-solid.fa-shield-halved.mr-2
+            | ADMIN
+    div(style="flex: 1; text-align: right; padding-right: 20px;")
+        a(
+            href=`${prefixAdmin}/my_account`
+            class="btn btn-primary btn-sm mr-2"
+            style="border-radius: 20px; padding: 5px 15px;"
+        )
+            i.fa-solid.fa-user.mr-2
+            | #{user.fullName}
 
-                    a(
-                        href=`${prefixAdmin}/auth/logout`
-                        class="btn btn-danger btn-sm"
-                        style="border-radius: 20px; padding: 5px 15px;"
-                    ) 
-                        i.fa-solid.fa-right-from-bracket.mr-2
-                        | Đăng xuất
+        a(
+            href=`${prefixAdmin}/auth/logout`
+            class="btn btn-danger btn-sm"
+            style="border-radius: 20px; padding: 5px 15px;"
+        )
+            i.fa-solid.fa-right-from-bracket.mr-2
+            | Đăng xuất

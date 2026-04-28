@@ -24,19 +24,19 @@
                         i.fa-solid.fa-trash-can-arrow-up.mr-2
                         | Khôi phục sản phẩm
             
-            if (role.permissions.includes("role_view"))
+            if (role.permissions.includes("roles_view"))
                 li 
                     a(href=prefixAdmin + "/role")
                         i.fa-solid.fa-user-shield.mr-2
                         | Nhóm quyền
                 
-            if (role.permissions.includes("role_permission"))
+            if (role.permissions.includes("roles_permissions"))
                 li
                     a(href=prefixAdmin + "/role/permission")
                         i.fa-solid.fa-key.mr-2
                         | Phân quyền
             
-            if (role.permissions.includes("account_view"))
+            if (role.permissions.includes("accounts_view"))
                 li
                     a(href=prefixAdmin + "/account")
                         i.fa-solid.fa-users.mr-2

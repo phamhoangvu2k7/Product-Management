@@ -9,6 +9,7 @@ module.exports.requireAuth = async (req, res, next) => {
     else {
         const user = await Account.findOne({ token: req.cookies.token }).select("-password");
         if (!user) {
+            res.clearCookie("token");
             res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
         } 
         else {
