@@ -6,83 +6,79 @@ block main
     +alert-success(5000)
     +alert-error(5000)
 
-    .container.my-3 
-        .row 
-            .col-12 
-                +box-head("Đặt hàng")
+    .container.my-5
+        +box-head("Đặt hàng")
 
-        .row 
-            .col-12 
-                table(class="table table-bordered")
-                    thead 
-                        tr 
+        if (cartDetail.products.length > 0)
+            .table-card.mb-4
+                table.table
+                    thead
+                        tr
                             th STT
-                            th Ảnh 
-                            th Tên 
+                            th Sản phẩm
                             th Giá
                             th Số lượng
-                            th Tổng tiền   
-                    tbody 
-                        if(cartDetail.products.length > 0)
-                            each item, index in cartDetail.products
-                                tr 
-                                    td #{index + 1}
-                                    td 
+                            th Tổng tiền
+                    tbody
+                        each item, index in cartDetail.products
+                            tr
+                                td #{index + 1}
+                                td
+                                    .d-flex.align-items-center(style="gap: 12px;")
                                         img(
-                                            src=item.productInfo.thumbnail
+                                            src=item.productInfo.thumbnail || '/uploads/seed/no-image.svg'
                                             alt=item.productInfo.title
-                                            width="80px"
+                                            width="64"
+                                            height="64"
+                                            style="object-fit: cover;"
                                         )
-                                    td #{item.productInfo.title}
-                                    td #{item.productInfo.priceNew}$
-                                    td #{item.quantity}
-                                    td #{item.totalPrice}$
-                        else 
-                            tr 
-                                td(
-                                    colspan="7"
-                                    class="text-center"
-                                ) Giỏ hàng trống 
-                if(cartDetail.products.length > 0)
-                    h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}$
+                                        span #{item.productInfo.title}
+                                td #{item.productInfo.priceNew}$
+                                td #{item.quantity}
+                                td
+                                    b #{item.totalPrice}$
 
-        if(cartDetail.products.length > 0)
-            .row 
-                .col-12 
-                    .card.p-4.my-4 
-                        form(
-                            action=`/checkout/order`
-                            method="POST"
+            .order-total.mb-4
+                .label Tổng đơn hàng
+                .amount #{cartDetail.totalPrice}$
+
+            .form-card
+                h2
+                    i.fa-solid.fa-truck.mr-2
+                    | Thông tin giao hàng
+                form(action="/checkout/order" method="POST")
+                    .form-group
+                        label(for="fullName") Họ tên
+                        input.form-control(
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Nhập họ tên"
+                            required
                         )
-                            div(class="form-group") 
-                                label(for="fullName") Họ tên 
-                                input(
-                                    type="text"
-                                    class="form-control"
-                                    id="fullName"
-                                    name="fullName"
-                                    required 
-                                )
-                            div(class="form-group") 
-                                label(for="phone") Số điện thoại  
-                                input(
-                                    type="phone"
-                                    class="form-control"
-                                    id="phone"
-                                    name="phone"
-                                    required
-                                )
-                            div(class="form-group") 
-                                label(for="address") Địa chỉ
-                                input(
-                                    type="text"
-                                    class="form-control"
-                                    id="address"
-                                    name="address"
-                                    required
-                                )
-                            div(class="form-group")
-                                button(
-                                    type="submit"
-                                    class="btn btn-success btn-block"
-                                ) ĐẶT HÀNG 
+                    .form-group
+                        label(for="phone") Số điện thoại
+                        input.form-control(
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Nhập số điện thoại"
+                            required
+                        )
+                    .form-group
+                        label(for="address") Địa chỉ
+                        input.form-control(
+                            type="text"
+                            id="address"
+                            name="address"
+                            placeholder="Nhập địa chỉ giao hàng"
+                            required
+                        )
+                    button.btn.btn-success.btn-lg.btn-block(type="submit")
+                        i.fa-solid.fa-check.mr-2
+                        | ĐẶT HÀNG
+        else
+            .empty-state
+                i.fa-solid.fa-cart-shopping
+                p Giỏ hàng trống
+                a.btn.btn-primary.mt-3(href="/products") Mua sắm ngay

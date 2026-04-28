@@ -3,10 +3,13 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
 
 block main
-    .section-products-featured.my-5
-        .container
-            .row
-                .col-12
-                    +box-head(pageTitle)
+    .container.my-5
+        +box-head(pageTitle)
 
+        if (products && products.length > 0)
             +product-grid(products)
+        else
+            .empty-state
+                i.fa-solid.fa-box-open
+                p Chưa có sản phẩm nào trong danh mục này.
+                a.btn.btn-primary.mt-3(href="/") Về trang chủ

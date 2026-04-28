@@ -13,12 +13,11 @@ block main
     if (product.stock)
         div(class="mb-4") Số lượng: <b>#{product.stock}</b>
 
-    if (product.thumbnail)
-        div(class="mb-4") 
-            img(
-                src=product.thumbnail
-                style="width: 100px"
-            )
+    div(class="mb-4")
+        img(
+            src=product.thumbnail || '/uploads/seed/no-image.svg'
+            style="width: 100px"
+        )
     if (product.status)
         div(class="mb-4")
             span Trạng thái: 

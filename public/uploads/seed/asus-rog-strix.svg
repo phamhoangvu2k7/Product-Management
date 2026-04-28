@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#f5f5f5"/>
+  <rect x="70" y="35" width="260" height="170" rx="6" fill="#1a1a1a" stroke="#ff0000" stroke-width="2"/>
+  <rect x="82" y="47" width="236" height="146" fill="#0d0d0d"/>
+  <rect x="92" y="57" width="216" height="126" fill="#111"/>
+  <polygon points="150,90 200,70 250,90 250,140 200,160 150,140" fill="none" stroke="#ff0000" stroke-width="2"/>
+  <text x="200" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="bold" fill="#ff0000">ROG</text>
+  <rect x="110" y="205" width="180" height="8" rx="2" fill="#333"/>
+  <rect x="170" y="213" width="60" height="4" rx="1" fill="#ff0000"/>
+  <text x="200" y="258" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#333">ASUS ROG Strix G16</text>
+</svg>

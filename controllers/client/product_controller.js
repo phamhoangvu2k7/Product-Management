@@ -60,6 +60,11 @@ module.exports.category = async (req, res) => {
         deleted: false
     });
 
+    if (!category) {
+        res.redirect("/products");
+        return;
+    }
+
     const listSubCategory = await getSubCategoryHelpers.getSubCategory(category.id);
     const listSubCategoryId = listSubCategory.map(item => item.id);
 

@@ -1,51 +1,71 @@
 include ../mixins/sub-menu.pug
 
 header.header 
-    .container 
-        .row.align-items-center 
-            .col-3 
-                .inner-logo 
-                    a(href="/")
+    .container-fluid.px-4
+        .d-flex.align-items-center.justify-content-between.flex-wrap
+            .inner-logo.mr-4
+                a(href="/")
+                    if settingGeneral && settingGeneral.logo
                         img(src=settingGeneral.logo, alt=settingGeneral.websiteName)
+                    else
+                        span= (settingGeneral && settingGeneral.websiteName) ? settingGeneral.websiteName : 'Home'
 
-            .col-5
+            .inner-search.flex-grow-1.mr-4(style="max-width: 400px;")
                 form(
                     action="/search"
                     method="GET"
                 )
-                    div(class="form-group d-flex mb-0")
+                    div(class="form-group d-flex mb-0 search-box")
                         input(
                             type="text"
                             placeholder="Nhập từ khóa..."
-                            class="form-control"
+                            class="form-control border-0"
                             name="keyword"
                             value=keyword
+                            style="border-radius: 20px 0 0 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);"
                         )
                         button(
                             type="submit"
-                            class="btn btn-primary ml-2"
-                        ) Tìm
+                            class="btn btn-primary"
+                            style="border-radius: 0 20px 20px 0; padding: 0 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);"
+                        )
+                            i.fa-solid.fa-magnifying-glass
 
-            .col-4
-                .inner-menu 
-                    ul 
+            .inner-menu 
+                ul.d-flex.align-items-center.m-0.p-0(style="list-style: none; gap: 10px;")
+                    li 
+                        a(href="/") 
+                            i.fa-solid.fa-house.mr-1
+                            | Trang chủ
+                    li(class="sub-menu")
+                        -const pathProduct = "/products";
+                        a(href="/products")
+                            i.fa-solid.fa-box.mr-1
+                            | Sản phẩm
+                        +sub-menu(layoutProductsCategory, pathProduct)
+                    li 
+                        a(href="/cart") 
+                            i.fa-solid.fa-cart-shopping.mr-1
+                            | Giỏ hàng (#{miniCart ? miniCart.totalQuantity : 0})   
+                    if (user)
                         li 
-                            a(href="/") Trang chủ
-                        li(class="sub-menu")
-                            -const pathProduct = "/products";
-                            a(href="/products") Sản phẩm
-                                +sub-menu(layoutProductsCategory, pathProduct)
+                            a(href="/chat") 
+                                i.fa-solid.fa-comments.mr-1
+                                | Chat
                         li 
-                            a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : 0})   
-                        if (user)
-                            li 
-                                a(href="/chat") Chat
-                            li 
-                                a(href="/user/info") #{user.fullName}
-                            li
-                                a(href="/user/logout") Đăng xuất
-                        else
-                            li 
-                                a(href="/user/register") Đăng ký
-                            li 
-                                a(href="/user/login") Đăng nhập
+                            a(href="/user/info") 
+                                i.fa-solid.fa-user.mr-1
+                                | #{user.fullName}
+                        li
+                            a(href="/user/logout") 
+                                i.fa-solid.fa-right-from-bracket.mr-1
+                                | Đăng xuất
+                    else
+                        li 
+                            a(href="/user/register") 
+                                i.fa-solid.fa-user-plus.mr-1
+                                | Đăng ký
+                        li 
+                            a(href="/user/login") 
+                                i.fa-solid.fa-right-to-bracket.mr-1
+                                | Đăng nhập

@@ -35,7 +35,12 @@ app.set("view engine", "pug");
 
 // Flash
 app.use(cookieParser('PHV24052007'));
-app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(session({
+    secret: 'PHV24052007',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}));
 app.use(flash());
 
 // App Locals Variables

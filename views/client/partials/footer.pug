@@ -1,2 +1,31 @@
-footer.footer 
-    Copyright Phạm Hoàng Vũ
+footer.footer
+    .container
+        .row
+            .col-md-4.mb-4
+                h5 Về chúng tôi
+                p Cung cấp các sản phẩm chất lượng tốt nhất với dịch vụ hỗ trợ tận tâm. Mua sắm dễ dàng, thanh toán an toàn.
+            .col-md-4.mb-4
+                h5 Liên hệ
+                ul(style="list-style: none; padding: 0; margin: 0;")
+                    li
+                        i.fa-solid.fa-location-dot.mr-2
+                        | 123 Đường ABC, Quận X, TP.HCM
+                    li
+                        i.fa-solid.fa-phone.mr-2
+                        | 0123 456 789
+                    li
+                        i.fa-solid.fa-envelope.mr-2
+                        | support@example.com
+            .col-md-4.mb-4
+                h5 Theo dõi
+                div(style="display: flex; gap: 12px;")
+                    a.social-link(href="#")
+                        i.fa-brands.fa-facebook-f
+                    a.social-link(href="#")
+                        i.fa-brands.fa-twitter
+                    a.social-link(href="#")
+                        i.fa-brands.fa-instagram
+        .row.mt-3
+            .col-12
+                hr
+                p(style="font-size: 13px; margin: 16px 0 0;") &copy; #{new Date().getFullYear()} Phạm Hoàng Vũ. All rights reserved.

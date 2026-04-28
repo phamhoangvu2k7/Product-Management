@@ -8,30 +8,30 @@ module.exports.index = async (req, res) => {
     const cart = await Cart.findOne({
         user_id: cartId
     });
-    if (cart) {
-        if (cart.products.length > 0) {
-            for (const item of cart.products) {
-                const productId = item.product_id;
-                const productInfo = await Product.findOne({
-                    _id: productId,
-                    deleted: false
-                }).select("title thumbnail slug price discountPercentage");
-    
+
+    if (cart && cart.products.length > 0) {
+        for (const item of cart.products) {
+            const productInfo = await Product.findOne({
+                _id: item.product_id,
+                deleted: false
+            }).select("title thumbnail slug price discountPercentage");
+
+            if (productInfo) {
                 item.productInfo = productInfo;
-                item.totalPrice = (item.productInfo.price - parseInt(item.productInfo.price * item.productInfo.discountPercentage / 100)) * item.quantity;
+                item.totalPrice = (productInfo.price - parseInt(productInfo.price * productInfo.discountPercentage / 100)) * item.quantity;
+            } else {
+                item.productInfo = { title: "Sản phẩm không tồn tại", thumbnail: "", slug: "", price: 0, discountPercentage: 0 };
+                item.totalPrice = 0;
             }
         }
-    
-        cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0);
 
-        res.render("client/pages/cart/index", {
-            pageTitle: "Giỏ hàng",
-            cartDetail: cart
-        });
+        cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0);
     }
-    else {
-        res.redirect("/");
-    }
+
+    res.render("client/pages/cart/index", {
+        pageTitle: "Giỏ hàng",
+        cartDetail: cart || { products: [], totalPrice: 0 }
+    });
 }
 
 // [POST] /cart/add/:productId
@@ -44,44 +44,37 @@ module.exports.addPost = async (req, res) => {
         user_id: cartId
     });
 
-    if (cart.products) {
-
-        const existProductInCart = cart.products.find(
-            item => item.product_id == productId
-        );
-    
-        if (existProductInCart) {
-            const quantityNew = quantity + existProductInCart.quantity;
-            
-            await Cart.updateOne({
-                user_id: cartId,
-                "products.product_id": productId
-            }, {
-                $set: {
-                    "products.$.quantity": quantityNew
-                }
-            });
-        }
-        else {
-            const objectCart = {
-                product_id: productId,
-                quantity: quantity
-            };
-    
-            await Cart.updateOne(
-                {
-                    user_id: cartId
-                },
-                {
-                    $push: { products: objectCart }
-                }
-            );
-        }
+    if (!cart) {
+        req.flash("error", "Không tìm thấy giỏ hàng");
+        res.redirect(req.get("referer") || "/");
+        return;
     }
 
+    const existProductInCart = cart.products.find(
+        item => item.product_id == productId
+    );
+
+    if (existProductInCart) {
+        const quantityNew = quantity + existProductInCart.quantity;
+
+        await Cart.updateOne({
+            user_id: cartId,
+            "products.product_id": productId
+        }, {
+            $set: {
+                "products.$.quantity": quantityNew
+            }
+        });
+    }
+    else {
+        await Cart.updateOne(
+            { user_id: cartId },
+            { $push: { products: { product_id: productId, quantity: quantity } } }
+        );
+    }
 
     req.flash("success", "Đã thêm sản phẩm vào giỏ hàng");
-    res.redirect(req.get("referer"));
+    res.redirect(req.get("referer") || "/");
 }
 
 // [GET] /delete/:productId
@@ -94,7 +87,7 @@ module.exports.delete = async (req, res) => {
     }, {
         $pull: { products: { product_id: productId } }
     });
-    res.redirect(req.get("referer"));
+    res.redirect(req.get("referer") || "/cart");
 }
 
 // [GET] /update/:productId/quantity
@@ -115,5 +108,5 @@ module.exports.update = async (req, res) => {
         }
     );
 
-    res.redirect(req.get("referer"));
+    res.redirect(req.get("referer") || "/cart");
 }

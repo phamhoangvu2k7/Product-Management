@@ -5,21 +5,30 @@ const Order = require("../../models/orders_model");
 // [GET] /checkout/
 module.exports.index = async (req, res) => {
     const cartId = req.cookies.cartId;
-    
+
     const cart = await Cart.findOne({
         user_id: cartId
     });
 
-    if (cart.products.length > 0) {
-        for (const item of cart.products) {
-            const productId = item.product_id;
-            const productInfo = await Product.findOne({
-                _id: productId,
-                deleted: false
-            }).select("title thumbnail slug price discountPercentage");
+    if (!cart || cart.products.length === 0) {
+        req.flash("error", "Giỏ hàng trống");
+        res.redirect("/cart");
+        return;
+    }
 
+    for (const item of cart.products) {
+        const productInfo = await Product.findOne({
+            _id: item.product_id,
+            deleted: false
+        }).select("title thumbnail slug price discountPercentage");
+
+        if (productInfo) {
             item.productInfo = productInfo;
-            item.totalPrice = (item.productInfo.price - parseInt(item.productInfo.price * item.productInfo.discountPercentage / 100)) * item.quantity;
+            item.productInfo.priceNew = productInfo.price - parseInt(productInfo.price * productInfo.discountPercentage / 100);
+            item.totalPrice = item.productInfo.priceNew * item.quantity;
+        } else {
+            item.productInfo = { title: "Sản phẩm không tồn tại", thumbnail: "", slug: "", price: 0, discountPercentage: 0, priceNew: 0 };
+            item.totalPrice = 0;
         }
     }
 
@@ -38,23 +47,28 @@ module.exports.order = async (req, res) => {
     const cart = await Cart.findOne({
         user_id: cartId
     });
+
+    if (!cart || cart.products.length === 0) {
+        req.flash("error", "Giỏ hàng trống");
+        res.redirect("/cart");
+        return;
+    }
+
     const products = [];
 
     for (let product of cart.products) {
-        const objectProduct = {
-            product_id: product.product_id,
-            price: 0,
-            discountPercentage: 0,
-            quantity: product.quantity
-        }
-
         const productInfo = await Product.findOne({
             _id: product.product_id
         }).select("price discountPercentage");
 
-        objectProduct.price = productInfo.price;
-        objectProduct.discountPercentage = productInfo.discountPercentage;
-        products.push(objectProduct);
+        if (productInfo) {
+            products.push({
+                product_id: product.product_id,
+                price: productInfo.price,
+                discountPercentage: productInfo.discountPercentage,
+                quantity: product.quantity
+            });
+        }
     }
 
     const orderInfo = {
@@ -64,7 +78,7 @@ module.exports.order = async (req, res) => {
     };
 
     const order = new Order(orderInfo);
-    order.save();
+    await order.save();
 
     await Cart.updateOne({
         user_id: cartId
@@ -79,15 +93,21 @@ module.exports.order = async (req, res) => {
 module.exports.success = async (req, res) => {
     const order = await Order.findOne({
         _id: req.params.orderId
-    })
+    });
+
+    if (!order) {
+        res.redirect("/");
+        return;
+    }
 
     for (const product of order.products) {
         const productInfo = await Product.findOne({
             _id: product.product_id
         }).select("title thumbnail");
+
         product.priceNew = (product.price - parseInt(product.price * product.discountPercentage / 100));
-        product.totalPrice = (product.price - parseInt(product.price * product.discountPercentage / 100)) * product.quantity;
-        product.productInfo = productInfo;
+        product.totalPrice = product.priceNew * product.quantity;
+        product.productInfo = productInfo || { title: "Sản phẩm không tồn tại", thumbnail: "" };
     }
 
     order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0);

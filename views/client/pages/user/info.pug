@@ -1,10 +1,26 @@
-extends ../../layouts/default.pug 
+extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 
-block main 
-    .container.my-3
-        .row
-            .col-12 
-                +box-head("Thông tin tài khoản")
-
-        div #{user}
+block main
+    .container.my-5
+        +box-head("Thông tin tài khoản")
+        .user-info-card
+            .avatar #{user.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'}
+            if (user.fullName)
+                .info-row
+                    .info-label
+                        i.fa-solid.fa-user.mr-2
+                        | Họ tên
+                    .info-value #{user.fullName}
+            if (user.email)
+                .info-row
+                    .info-label
+                        i.fa-solid.fa-envelope.mr-2
+                        | Email
+                    .info-value #{user.email}
+            if (user.phone)
+                .info-row
+                    .info-label
+                        i.fa-solid.fa-phone.mr-2
+                        | SĐT
+                    .info-value #{user.phone}

@@ -1,4 +1,10 @@
-h1 404 Not Found 
-button(
-    onclick="history.back()"
-) Trở lại 
+extends ../../layouts/default.pug
+
+block main
+    .container
+        .page-404
+            h1 404
+            p Trang bạn tìm kiếm không tồn tại.
+            a.btn.btn-primary.btn-lg(href="/")
+                i.fa-solid.fa-house.mr-2
+                | Về trang chủ
