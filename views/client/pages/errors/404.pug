@@ -4,7 +4,9 @@ block main
     .container
         .page-404
             h1 404
-            p Trang bạn tìm kiếm không tồn tại.
-            a.btn.btn-primary.btn-lg(href="/")
-                i.fa-solid.fa-house.mr-2
-                | Về trang chủ
+            p The page you're looking for doesn't exist.
+            .d-flex.justify-content-center(style="gap: 16px; flex-wrap: wrap;")
+                a.btn-cta(href="/")
+                    i.fa-solid.fa-house(style="font-size: 13px;")
+                    | Go Home
+                a.btn-cta-outline(href="/products") Browse Products

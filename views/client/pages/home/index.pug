@@ -1,16 +1,41 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
+include ../../mixins/hero.pug
+include ../../mixins/trust-badges.pug
+include ../../mixins/category-grid.pug
+
+block head
+    script(type="application/ld+json").
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "PM Store",
+            "url": "https://pmstore.com",
+            "logo": "https://pmstore.com/images/logo-tech.png",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+84-123-456-789",
+                "contactType": "customer service"
+            }
+        }
 
 block main
-    .container.my-5
-        .row
-            .col-12
-                +box-head("Sản phẩm nổi bật")
-        +product-grid(productsFeatured)
+    +hero("High-End Tech — Best Prices", "Explore the latest Laptop, Smartphone & Tablet collections. Genuine products, fast delivery, 12-month warranty.", "Shop Now", "/products", "/images/logo-tech.png")
 
-    .container.my-5
-        .row
-            .col-12
-                +box-head("Sản phẩm mới")
-        +product-grid(productsNew)
+    section.categories-section(aria-label="Product categories")
+        .container
+            +box-head("Categories")
+            +category-grid(layoutProductsCategory)
+
+    section.py-5(aria-label="Featured products")
+        .container
+            +box-head("Featured Products")
+            +product-grid(productsFeatured)
+
+    +trust-badges()
+
+    section.py-5(aria-label="New products")
+        .container
+            +box-head("New Arrivals")
+            +product-grid(productsNew)

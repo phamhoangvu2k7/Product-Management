@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary').v2;
-const streamifier = require('streamifier');
+const { Readable } = require('stream');
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -20,7 +20,7 @@ module.exports.upload = (req, res, next) => {
                         }
                     });
 
-                streamifier.createReadStream(req.file.buffer).pipe(stream);
+                Readable.from(req.file.buffer).pipe(stream);
             });
         };
 

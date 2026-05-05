@@ -229,7 +229,7 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
     const permissions = res.locals.role.permissions;
 
-    if (!permissions.includes("account_edit")) {
+    if (!permissions.includes("products_edit")) {
         res.send("Không có quyền truy cập");
         return;
     }
@@ -238,9 +238,6 @@ module.exports.editPatch = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
     req.body.position = parseInt(req.body.position);
-
-    if (req.file)
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
     
     try {
         const updatedBy = {

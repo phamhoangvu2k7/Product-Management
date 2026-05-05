@@ -1,6 +1,6 @@
 mixin search(keyword) 
     form(id="form-search")
-        .input-group
+        .search-box
             input(
                 type="text"
                 placeholder="Nhập từ khóa"
@@ -8,8 +8,8 @@ mixin search(keyword)
                 class="form-control"
                 value=keyword
             )
-            .input-group-append
-                button(
-                    class="btn btn-success"
-                    type="submit"
-                ) Tìm
+            button(
+                class="btn"
+                type="submit"
+            )
+                i.fa-solid.fa-magnifying-glass

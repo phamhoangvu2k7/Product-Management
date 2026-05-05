@@ -1,0 +1,35 @@
+mixin hero(title, subtitle, ctaText, ctaUrl, imageSrc)
+    section.hero-section(aria-label="Hero Banner")
+        .container
+            .row.align-items-center
+                .col-lg-7
+                    .hero-content
+                        .hero-badge
+                            i.fa-solid.fa-bolt
+                            | Premium Electronics Store
+                        h1
+                            | #{title.split('—')[0]}
+                            if title.indexOf('—') > -1
+                                span — #{title.split('—')[1]}
+                        p= subtitle
+                        .d-flex.flex-wrap(style="gap: 16px; align-items: center;")
+                            a.btn-cta(href=ctaUrl)
+                                | #{ctaText}
+                                i.fa-solid.fa-arrow-right(style="font-size: 13px;")
+                            a.btn-cta-outline(href="/products")
+                                i.fa-solid.fa-grid-2(style="font-size: 13px;")
+                                | Browse All
+                        .hero-stats
+                            .hero-stat
+                                .stat-number 10K+
+                                .stat-label Products
+                            .hero-stat
+                                .stat-number 50K+
+                                .stat-label Customers
+                            .hero-stat
+                                .stat-number 99%
+                                .stat-label Satisfaction
+                .col-lg-5
+                    .hero-image-wrap
+                        if imageSrc
+                            img(src=imageSrc alt="Featured tech product" loading="eager")

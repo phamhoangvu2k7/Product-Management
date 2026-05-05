@@ -4,13 +4,13 @@ module.exports.general = async (req, res) => {
     const settingGeneral = await SettingGeneral.findOne({});
 
     res.render("admin/pages/setting/general", {
-        pageTitle: "Cài đặc chung",
+        pageTitle: "Cài đặt chung",
         settingGeneral: settingGeneral
     });
 }
 
 module.exports.generalPatch = async (req, res) => {
-    const settingGeneral = SettingGeneral.findOne({});
+    const settingGeneral = await SettingGeneral.findOne({});
 
     if(settingGeneral) {
         await SettingGeneral.updateOne({
@@ -22,6 +22,7 @@ module.exports.generalPatch = async (req, res) => {
         await record.save();
     }
 
-
+    req.flash("success", "Cập nhật cài đặt chung thành công!");
     res.redirect(req.get("referer"));
 }
+

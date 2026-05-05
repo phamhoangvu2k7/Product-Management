@@ -7,18 +7,30 @@ block main
     +alert-error(5000)
 
     .container.my-5
-        +box-head("Đặt hàng")
+        .checkout-steps
+            .checkout-step.done
+                .step-num
+                    i.fa-solid.fa-check
+                | Cart
+            .checkout-step.active
+                .step-num 2
+                | Order Info
+            .checkout-step
+                .step-num 3
+                | Complete
+
+        +box-head("Place Order")
 
         if (cartDetail.products.length > 0)
             .table-card.mb-4
                 table.table
                     thead
                         tr
-                            th STT
-                            th Sản phẩm
-                            th Giá
-                            th Số lượng
-                            th Tổng tiền
+                            th #
+                            th Product
+                            th Price
+                            th Qty
+                            th Total
                     tbody
                         each item, index in cartDetail.products
                             tr
@@ -28,57 +40,58 @@ block main
                                         img(
                                             src=item.productInfo.thumbnail || '/uploads/seed/no-image.svg'
                                             alt=item.productInfo.title
-                                            width="64"
-                                            height="64"
-                                            style="object-fit: cover;"
+                                            width="56"
+                                            height="56"
+                                            style="object-fit: cover; border-radius: 8px;"
+                                            loading="lazy"
                                         )
                                         span #{item.productInfo.title}
                                 td #{item.productInfo.priceNew}$
                                 td #{item.quantity}
                                 td
-                                    b #{item.totalPrice}$
+                                    b(style="color: var(--primary); font-family: 'JetBrains Mono', monospace;") #{item.totalPrice}$
 
             .order-total.mb-4
-                .label Tổng đơn hàng
+                .label Total Order
                 .amount #{cartDetail.totalPrice}$
 
             .form-card
                 h2
                     i.fa-solid.fa-truck.mr-2
-                    | Thông tin giao hàng
+                    | Shipping Information
                 form(action="/checkout/order" method="POST")
                     .form-group
-                        label(for="fullName") Họ tên
+                        label(for="fullName") Full Name
                         input.form-control(
                             type="text"
                             id="fullName"
                             name="fullName"
-                            placeholder="Nhập họ tên"
+                            placeholder="Enter your full name"
                             required
                         )
                     .form-group
-                        label(for="phone") Số điện thoại
+                        label(for="phone") Phone
                         input.form-control(
                             type="tel"
                             id="phone"
                             name="phone"
-                            placeholder="Nhập số điện thoại"
+                            placeholder="Enter phone number"
                             required
                         )
                     .form-group
-                        label(for="address") Địa chỉ
+                        label(for="address") Address
                         input.form-control(
                             type="text"
                             id="address"
                             name="address"
-                            placeholder="Nhập địa chỉ giao hàng"
+                            placeholder="Enter delivery address"
                             required
                         )
                     button.btn.btn-success.btn-lg.btn-block(type="submit")
                         i.fa-solid.fa-check.mr-2
-                        | ĐẶT HÀNG
+                        | Place Order
         else
             .empty-state
                 i.fa-solid.fa-cart-shopping
-                p Giỏ hàng trống
-                a.btn.btn-primary.mt-3(href="/products") Mua sắm ngay
+                p Your cart is empty.
+                a.btn.btn-primary.mt-3(href="/products") Shop Now

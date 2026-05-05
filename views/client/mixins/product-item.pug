@@ -4,17 +4,24 @@ mixin product-item(item)
             .inner-image
                 a(href=`/products/detail/${item.slug}`)
                     img(
-                        src=item.thumbnail || '/uploads/seed/no-image.svg',
-                        alt=item.title
+                        src=item.thumbnail || '/uploads/seed/no-image.svg'
+                        alt=`${item.title} — PM Store`
+                        loading="lazy"
                     )
+                .quick-view
+                    a(href=`/products/detail/${item.slug}`)
+                        i.fa-solid.fa-eye
+                        | Quick View
                 if (item.featured == "1")
-                    .inner-featured Nổi bật
+                    .inner-featured
+                        i.fa-solid.fa-bolt.mr-1
+                        | Featured
                 if (item.discountPercentage)
                     .inner-discount -#{item.discountPercentage}%
             .inner-content
                 h3.inner-title
                     a(href=`/products/detail/${item.slug}`) #{item.title}
-                .d-flex.align-items-baseline.flex-wrap(style="gap: 8px;")
+                .inner-price-wrap
                     .inner-price-new #{item.priceNew}$
                     if (item.discountPercentage)
                         .inner-price-old #{item.price}$
