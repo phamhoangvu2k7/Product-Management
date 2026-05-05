@@ -1,0 +1,30 @@
+mixin category-grid(categories)
+    .category-grid
+        if categories && categories.length > 0
+            each cat in categories
+                a.category-card(href=`/products/${cat.slug}`)
+                    .cat-icon
+                        i(class=`fa-solid ${cat.icon || 'fa-box'}`)
+                    .cat-name= cat.title
+                    .cat-count View products →
+        else
+            a.category-card(href="/products/laptop")
+                .cat-icon
+                    i.fa-solid.fa-laptop
+                .cat-name Laptop
+                .cat-count View products →
+            a.category-card(href="/products/smartphone")
+                .cat-icon
+                    i.fa-solid.fa-mobile-screen
+                .cat-name Smartphone
+                .cat-count View products →
+            a.category-card(href="/products/tablet")
+                .cat-icon
+                    i.fa-solid.fa-tablet-screen-button
+                .cat-name Tablet
+                .cat-count View products →
+            a.category-card(href="/products")
+                .cat-icon
+                    i.fa-solid.fa-microchip
+                .cat-name Accessories
+                .cat-count View products →

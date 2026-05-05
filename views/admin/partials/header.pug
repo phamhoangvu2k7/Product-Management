@@ -2,20 +2,45 @@ header.header
     .inner-logo
         a(href="/admin/dashboard")
             i.fa-solid.fa-shield-halved.mr-2
-            | ADMIN
-    div(style="flex: 1; text-align: right; padding-right: 20px;")
-        a(
-            href=`${prefixAdmin}/my_account`
-            class="btn btn-primary btn-sm mr-2"
-            style="border-radius: 20px; padding: 5px 15px;"
-        )
-            i.fa-solid.fa-user.mr-2
-            | #{user.fullName}
+            | #{settingGeneral ? settingGeneral.websiteName : "ADMIN"}
 
-        a(
-            href=`${prefixAdmin}/auth/logout`
-            class="btn btn-danger btn-sm"
-            style="border-radius: 20px; padding: 5px 15px;"
+    
+    .inner-breadcrumb.ml-4.d-none.d-md-block(style="flex: 1;")
+        nav(aria-label="breadcrumb")
+            ol.breadcrumb.m-0.p-0(style="background: transparent; font-size: 13px;")
+                li.breadcrumb-item
+                    a(href="/admin/dashboard", style="color: var(--a-text-muted);") 
+                        i.fa-solid.fa-house.mr-1
+                        | Home
+                li.breadcrumb-item.active(aria-current="page", style="color: var(--a-primary);") #{pageTitle}
+
+    .inner-actions.d-flex.align-items-center.pr-4
+        a.btn.btn-outline-info.btn-sm.mr-3(
+            href="/", 
+            target="_blank",
+            style="border-radius: 20px; border-color: var(--a-border); color: var(--a-text-secondary);"
         )
-            i.fa-solid.fa-right-from-bracket.mr-2
-            | Đăng xuất
+            i.fa-solid.fa-earth-americas.mr-2
+            | View Website
+
+        .notification-bell.mr-3(style="position: relative; cursor: pointer; color: var(--a-text-secondary);")
+            i.fa-solid.fa-bell
+            span.badge.badge-danger(style="position: absolute; top: -8px; right: -8px; font-size: 9px; padding: 2px 5px;") 3
+
+        .user-dropdown.d-flex.align-items-center
+            a(
+                href=`${prefixAdmin}/my_account`
+                class="btn btn-primary btn-sm mr-2"
+                style="border-radius: 20px; padding: 5px 15px;"
+            )
+                i.fa-solid.fa-user.mr-2
+                | #{user.fullName}
+
+            a(
+                href=`${prefixAdmin}/auth/logout`
+                class="btn btn-danger btn-sm"
+                style="border-radius: 20px; padding: 5px 15px;"
+            )
+                i.fa-solid.fa-right-from-bracket.mr-2
+                | Đăng xuất
+

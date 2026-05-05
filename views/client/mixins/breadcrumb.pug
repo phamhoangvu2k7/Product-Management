@@ -1,0 +1,16 @@
+mixin breadcrumb(items)
+    nav.mb-3(aria-label="Breadcrumb")
+        ol.breadcrumb(itemscope itemtype="https://schema.org/BreadcrumbList")
+            each item, index in items
+                li.breadcrumb-item(
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                    class=(index === items.length - 1 ? 'active' : '')
+                )
+                    if index < items.length - 1
+                        a(href=item.url itemprop="item")
+                            span(itemprop="name")= item.name
+                    else
+                        span(itemprop="name")= item.name
+                    meta(itemprop="position" content=index + 1)

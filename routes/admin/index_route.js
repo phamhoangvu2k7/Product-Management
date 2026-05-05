@@ -10,11 +10,15 @@ const myAccountRouters = require("./my_account_route");
 const settingRouters = require("./setting_route");
 
 const authMiddleware = require("../../middlewares/admin/auth_middlewares")
+const settingMiddleware = require("../../middlewares/client/setting_middlewares");
 
 module.exports = (app) => {
     const PATH_ADMIN = systemConfig.prefixAdmin;
 
+    app.use(settingMiddleware.SettingGeneral);
+
     app.use(
+
         PATH_ADMIN + "/dashboard", 
         authMiddleware.requireAuth, 
         dashboardRoutes

@@ -7,6 +7,17 @@ block main
     +alert-error(5000)
 
     .container.my-5
+        .checkout-steps
+            .checkout-step.active
+                .step-num 1
+                span Giỏ hàng
+            .checkout-step
+                .step-num 2
+                span Thanh toán
+            .checkout-step
+                .step-num 3
+                span Hoàn tất
+
         +box-head("Giỏ hàng")
 
         if (cartDetail.products.length > 0)

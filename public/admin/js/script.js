@@ -190,3 +190,21 @@ if (sort) {
 }
 
 // End Sort
+
+// Active Menu Sidebar
+const siderMenu = document.querySelector(".sider .inner-menu");
+if (siderMenu) {
+    const currentUrl = window.location.pathname;
+    const menuLinks = siderMenu.querySelectorAll("ul li a");
+    menuLinks.forEach(link => {
+        const linkHref = link.getAttribute("href");
+        if (currentUrl === linkHref || currentUrl.startsWith(linkHref + "/")) {
+            // Special case for dashboard to avoid matching everything if it's just "/"
+            if (linkHref === (prefixAdmin + "/dashboard") && currentUrl !== (prefixAdmin + "/dashboard")) {
+                return;
+            }
+            link.classList.add("active");
+        }
+    });
+}
+// End Active Menu Sidebar

@@ -4,7 +4,6 @@ const priceProductHelpers = require("../../helpers/priceProduct");
 
 // [GET] /
 module.exports.index = async (req, res) => {
-    // Get featured product
     let find = {
         featured: "1",
         deleted: false,
@@ -13,7 +12,6 @@ module.exports.index = async (req, res) => {
     const productsFeatured = await Product.find(find);
     const newProductsFeatured = priceProductHelpers.priceProduct(productsFeatured);
 
-    // Get new product
     const prodcutdNew = await Product.find({
         deleted: false,
         status: "active"
@@ -21,7 +19,10 @@ module.exports.index = async (req, res) => {
     const productsNew = priceProductHelpers.priceProduct(prodcutdNew);
 
     res.render("client/pages/home/index", {
-        pageTitle: "Trang chủ",
+        pageTitle: "Home",
+        pageDescription: "PM Store - Buy genuine laptops, smartphones, tablets at the best prices. Fast nationwide delivery, 12-month warranty.",
+        currentPath: "/",
+        ogType: "website",
         productsFeatured: newProductsFeatured,
         productsNew: productsNew
     });

@@ -1,31 +1,66 @@
-footer.footer
+footer.footer(role="contentinfo")
     .container
         .row
-            .col-md-4.mb-4
-                h5 Về chúng tôi
-                p Cung cấp các sản phẩm chất lượng tốt nhất với dịch vụ hỗ trợ tận tâm. Mua sắm dễ dàng, thanh toán an toàn.
-            .col-md-4.mb-4
-                h5 Liên hệ
+            .col-md-4.mb-5
+                .mb-3
+                    span(style="font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: 1px; font-family: 'Space Grotesk', sans-serif;") #{settingGeneral ? settingGeneral.websiteName : "PM Store"}
+                p(style="line-height: 1.8; max-width: 280px;") Genuine electronics — Laptop, Smartphone, Tablet. Fast delivery, 12-month warranty nationwide.
+                .mt-3
+                    h5(style="font-size: 13px; margin-bottom: 10px !important; color: var(--text-muted) !important; text-transform: uppercase; letter-spacing: 1px;") Newsletter
+                    form.newsletter-form(action="#" method="POST" onsubmit="return false;")
+                        input(type="email" placeholder="your@email.com" aria-label="Subscribe email")
+                        button(type="submit")
+                            i.fa-solid.fa-paper-plane
+
+            .col-md-3.mb-5
+                h5 Quick Links
                 ul(style="list-style: none; padding: 0; margin: 0;")
                     li
-                        i.fa-solid.fa-location-dot.mr-2
-                        | 123 Đường ABC, Quận X, TP.HCM
+                        a(href="/" style="color: inherit;") Home
                     li
-                        i.fa-solid.fa-phone.mr-2
-                        | 0123 456 789
+                        a(href="/products" style="color: inherit;") All Products
                     li
-                        i.fa-solid.fa-envelope.mr-2
-                        | support@example.com
-            .col-md-4.mb-4
-                h5 Theo dõi
-                div(style="display: flex; gap: 12px;")
-                    a.social-link(href="#")
+                        a(href="/cart" style="color: inherit;") Cart
+                    li
+                        a(href="/user/info" style="color: inherit;") My Account
+
+            .col-md-3.mb-5
+                h5 Contact
+                address(style="font-style: normal;")
+                    ul(style="list-style: none; padding: 0; margin: 0;")
+                        li
+                            i.fa-solid.fa-location-dot.mr-2(style="color: var(--primary);")
+                            | #{settingGeneral ? settingGeneral.address : "123 ABC Street, District X, HCMC"}
+                        li
+                            i.fa-solid.fa-phone.mr-2(style="color: var(--primary);")
+                            | #{settingGeneral ? settingGeneral.phone : "0123 456 789"}
+                        li
+                            i.fa-solid.fa-envelope.mr-2(style="color: var(--primary);")
+                            | #{settingGeneral ? settingGeneral.email : "support@pmstore.com"}
+
+            .col-md-2.mb-5
+                h5 Follow Us
+                div(style="display: flex; gap: 10px; flex-wrap: wrap;")
+                    a.social-link(href="#" aria-label="Facebook")
                         i.fa-brands.fa-facebook-f
-                    a.social-link(href="#")
-                        i.fa-brands.fa-twitter
-                    a.social-link(href="#")
+                    a.social-link(href="#" aria-label="Twitter/X")
+                        i.fa-brands.fa-x-twitter
+                    a.social-link(href="#" aria-label="Instagram")
                         i.fa-brands.fa-instagram
-        .row.mt-3
+                    a.social-link(href="#" aria-label="YouTube")
+                        i.fa-brands.fa-youtube
+                .mt-4
+                    h5(style="font-size: 13px; margin-bottom: 10px !important; color: var(--text-muted) !important; text-transform: uppercase; letter-spacing: 1px;") Payment
+                    .payment-icons
+                        span.payment-icon VISA
+                        span.payment-icon MC
+                        span.payment-icon MOMO
+                        span.payment-icon COD
+
+        .row.mt-2
             .col-12
                 hr
-                p(style="font-size: 13px; margin: 16px 0 0;") &copy; #{new Date().getFullYear()} Phạm Hoàng Vũ. All rights reserved.
+                p(style="font-size: 13px; margin: 16px 0 0; text-align: center;")
+                    | &copy; #{new Date().getFullYear()}&nbsp;
+                    a(href="/" style="color: var(--primary); font-weight: 600;") #{settingGeneral ? settingGeneral.websiteName : "PM Store"}
+                    | . All rights reserved.

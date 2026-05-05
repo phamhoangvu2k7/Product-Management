@@ -1,28 +1,38 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/breadcrumb.pug
+
+block head
+    script(type="application/ld+json")= JSON.stringify({ "@context": "https://schema.org", "@type": "Product", "name": product.title, "image": product.thumbnail, "brand": { "@type": "Brand", "name": "PM Store" }, "offers": { "@type": "Offer", "price": product.priceNew || product.price, "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://pmstore.com/products/detail/" + product.slug } })
 
 block main
     .product-detail
-        .container.my-5
+        .container.my-4
+            +breadcrumb(breadcrumbs || [{ name: 'Home', url: '/' }, { name: 'Products', url: '/products' }, { name: product.title, url: '#' }])
+
             .detail-card
                 .row.no-gutters
                     .col-md-6
                         .inner-thumb
-                            img(src=product.thumbnail || '/uploads/seed/no-image.svg', alt=product.title)
+                            img(
+                                src=product.thumbnail || '/uploads/seed/no-image.svg'
+                                alt=`${product.title} — PM Store`
+                                loading="eager"
+                            )
                     .col-md-6
                         .detail-info
                             if (product.category)
                                 .inner-category
                                     i.fa-solid.fa-tag.mr-1
-                                    span Danh mục:&nbsp;
+                                    span Category:&nbsp;
                                     a(href=`/products/${product.category.slug}`) #{product.category.title}
 
                             h1.inner-title #{product.title}
 
-                            if (product.price * (100 - product.discountPercentage) / 100)
-                                .inner-price-new #{product.price * (100 - product.discountPercentage) / 100}$
+                            if (product.priceNew)
+                                .inner-price-new #{product.priceNew}$
 
-                            if (product.price)
+                            if (product.price && product.discountPercentage)
                                 .inner-price-old #{product.price}$
 
                             .d-flex.flex-wrap.mb-3(style="gap: 10px;")
@@ -30,18 +40,15 @@ block main
                                     .inner-percent
                                         span
                                             i.fa-solid.fa-arrow-down.mr-1
-                                            | #{product.discountPercentage}%
+                                            | #{product.discountPercentage}% OFF
 
                                 if (product.stock)
                                     .inner-stock
                                         span
                                             i.fa-solid.fa-box.mr-1
-                                            | #{product.stock} sản phẩm
+                                            | #{product.stock} in stock
 
-                            form(
-                                action=`/cart/add/${product.id}`
-                                method="POST"
-                            )
+                            form(action=`/cart/add/${product.id}` method="POST")
                                 .d-flex.align-items-center.mt-3(style="gap: 12px;")
                                     input.qty-input(
                                         type="number"
@@ -49,16 +56,17 @@ block main
                                         value="1"
                                         min="1"
                                         max=product.stock
+                                        aria-label="Quantity"
                                     )
                                     button.btn.btn-success.btn-lg(type="submit" style="flex: 1;")
                                         i.fa-solid.fa-cart-plus.mr-2
-                                        | Thêm vào giỏ hàng
+                                        | Add to Cart
 
             .mt-5
-                +box-head("Mô tả sản phẩm")
+                +box-head("Product Description")
                 .inner-desc !{product.description}
 
             .mt-4
                 a.btn.btn-secondary(href="javascript:;" button-go-back)
                     i.fa-solid.fa-arrow-left.mr-2
-                    | Trở lại
+                    | Back

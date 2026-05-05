@@ -15,7 +15,9 @@ module.exports.index = async (req, res) => {
     const newProducts = priceProductHelpers.priceProduct(products);
 
     res.render("client/pages/products/index", {
-        pageTitle: "Danh sách sản phẩm",
+        pageTitle: "All Products",
+        pageDescription: "Browse all genuine laptops, smartphones, tablets and accessories at PM Store.",
+        currentPath: "/products",
         products: newProducts
     });
 };
@@ -28,8 +30,13 @@ module.exports.detail = async (req, res) => {
             deleted: false,
             status: "active"
         };
-        
+
         const product = await Product.findOne(find);
+
+        let breadcrumbs = [
+            { name: "Home", url: "/" },
+            { name: "Products", url: "/products" }
+        ];
 
         if (product.product_category_id) {
             const category = await ProductCategory.findOne({
@@ -39,10 +46,23 @@ module.exports.detail = async (req, res) => {
             });
 
             product.category = category;
+
+            if (category) {
+                breadcrumbs.push({ name: category.title, url: `/products/${category.slug}` });
+            }
         }
+
+        breadcrumbs.push({ name: product.title, url: "#" });
+
+        product.priceNew = Math.round(product.price * (100 - product.discountPercentage) / 100);
 
         res.render("client/pages/products/detail", {
             pageTitle: product.title,
+            pageDescription: `Buy ${product.title} at PM Store. Best price, genuine product, fast delivery.`,
+            currentPath: `/products/detail/${product.slug}`,
+            ogType: "product",
+            ogImage: product.thumbnail,
+            breadcrumbs: breadcrumbs,
             product: product
         });
     } catch (error) {
@@ -77,6 +97,8 @@ module.exports.category = async (req, res) => {
 
     res.render("client/pages/products/index", {
         pageTitle: category.title,
+        pageDescription: `Shop ${category.title} at PM Store — best prices, genuine products, fast delivery.`,
+        currentPath: `/products/${category.slug}`,
         products: newProducts
     });
 };
